@@ -3,6 +3,7 @@
 ## Project Idea:
 
 - Machine Learning with lyrics from [kaggle.com or other] to identify a songs genre by its lyrics; Input a song and get an estimation of its genre. 
+- Supervised learning -> we give the "Machine" a song's lyrics which we know the genre of.
 - (extra?) Perhaps train it to identify the artist by a songs lyrics - if possible, might be too difficult?
 
 ### NOTES
