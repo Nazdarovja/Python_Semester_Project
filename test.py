@@ -2,24 +2,6 @@ import collections
 from nltk.corpus import stopwords
 en_stops = set(stopwords.words('english'))
 
-# clean lyrics for one song
-def clean_data(sentence):
-    lyrics = lyrics.replace(",","")
-    lyrics = lyrics.replace(".","")
-    lyrics = lyrics.replace(":","")
-    lyrics = lyrics.replace(";","")
-    lyrics = lyrics.replace("\"","")
-    lyrics = lyrics.replace("\n","")
-    lyrics = lyrics.replace("/","")
-    lyrics = lyrics.replace("?","")
-    lyrics = lyrics.replace("!","")
-    lyrics = lyrics.replace("â€œ","")
-    lyrics = lyrics.replace("â€˜","")
-    lyrics = lyrics.replace("æ","")
-    lyrics = lyrics.replace("ø","")
-    lyrics = lyrics.replace("å","")
-    lyrics = lyrics.replace("*","")
-    return sentence.lower()
 
 # Cleaning stop words for each song's lyrics
 def clean_puta_words(lyrics):
