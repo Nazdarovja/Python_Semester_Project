@@ -1,6 +1,9 @@
 # Python_Semester_Project
 
-DET DÅRLIGT!
+# Dependency requirements
+- Anacondas Python distribution
+- `$pip install langdetect` - Google language detection lib
+- `$pip install nltk` - Natural language toolkit lib
 
 ## Project Idea:
 
