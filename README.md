@@ -24,3 +24,6 @@ The idea is to get data to differentiate characteristic for each genre, and ther
 
 The goal is to be able to feed the network lyrics from an "unknown" song, and have the network classify the song as a certain genre (by a percentage score).
 
+
+### ideas / sources
+https://tmthyjames.github.io/2018/february/Predicting-Musical-Genres/
