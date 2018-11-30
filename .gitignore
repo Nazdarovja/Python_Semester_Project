@@ -5,7 +5,7 @@
 
 # Data files
 *.csv
-
+lyrics.csv.zip/
 
 ### macOS ###
 # General
