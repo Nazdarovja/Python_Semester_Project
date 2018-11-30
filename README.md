@@ -36,7 +36,6 @@ https://www.kaggle.com/corizzi/lyrics-genre-analysis-machine-learning
 https://pypi.org/project/langdetect/
 
 ### Initial To Do
-- Find dataset from kaggle
 - Identify X genres to focus on, and how many songs/lyrics to use from each
 - Massage data: remove non english songs, cleanup date etc.
 - Write logic to identify top X most used words (per genre)
