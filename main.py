@@ -21,8 +21,10 @@ if __name__ == "__main__":
     lyrics_df['most_used_words'] = pd.Series(collections.Counter(lyrics.split())
                                     .most_common(10) for _, lyrics in lyrics_df['lyrics'].iteritems())
                                     # making a new column for each song and counts the most used words for each song
+
     arr = np.array(lyrics_df[lyrics_df['genre'] == 'Rock']['most_used_words'].tolist())
     arr = arr[~pd.isna(arr)]
+    arr = arr.flatten()
     rock = {}
 
     for x in arr:
@@ -43,10 +45,8 @@ if __name__ == "__main__":
     genres = lyrics_df['genre'].groupby(lyrics_df['genre']).count() # groups the dataset by genre and counts the amount of each genre
     print(lyrics_df.head()['most_used_words'])
     print(genres)
-    # print(rock)
-    print(max(rock, key=(lambda key: rock[key])))
-    print(rock['the']) # 459878 occurances of 'the' in all rock songs # TOP 1
-    # print(arr[0][0][0])
+    word_counter = collections.Counter(rock)
+    print(word_counter.most_common(20))
 # What is the minimum length of the lyrics in order to be defined as a song? hmm
 # minimum 500 length and removal of 'Not Available' 
 # and 'Other' filter 61000 elements away from the dataset
