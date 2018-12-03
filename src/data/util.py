@@ -88,7 +88,7 @@ def _clean_lyrics(lyrics):
             Returns None if empty string
             
     """
-    if len(lyrics) > 1:
+    if len(lyrics) > 500:
         lyrics = lyrics.replace(",","")
         lyrics = lyrics.replace(".","")
         lyrics = lyrics.replace(":","")
@@ -129,7 +129,7 @@ def _detect_english_string(input_string, language= 'en'):
     return val
 
 def clean_puta_words(lyrics):
-    stop_words = ['i', 'like', 'me', 'you', 'it', "it's", 'too', 'to', 'nan']
+    stop_words = ['i', 'like', 'me', 'you', 'it', "it's", 'too', 'to', 'nan', 'the', 'and', 'a']
     words = lyrics.split()
     for idx, word in enumerate(words): 
         if word in stop_words: # makes it O(1) because it's a Set (unique values), just like hashamp
