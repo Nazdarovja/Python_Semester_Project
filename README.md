@@ -1,7 +1,5 @@
 # Python_Semester_Project
 
-DET DÅRLIGT!
-
 ## Project Idea:
 
 - Machine Learning with lyrics from [kaggle.com or other] to identify a songs genre by its lyrics; Input a song and get an estimation of its genre. 
