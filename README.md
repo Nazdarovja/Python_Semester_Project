@@ -1,7 +1,5 @@
 # Python_Semester_Project
 
-DET DÅRLIGT!
-
 ## Project Idea:
 
 - Machine Learning with lyrics from [kaggle.com or other] to identify a songs genre by its lyrics; Input a song and get an estimation of its genre. 
@@ -31,6 +29,13 @@ The goal is to be able to feed the network lyrics from an "unknown" song, and ha
 https://tmthyjames.github.io/2018/february/Predicting-Musical-Genres/
 https://www.kaggle.com/corizzi/lyrics-genre-analysis-machine-learning
 https://pypi.org/project/langdetect/
+
+
+## Authors
+Alexander W. Hørsted-Andersen - developer - awha86
+Mathias Bigler - developer - Zurina
+Mikkel Emil Larsen - developer - mikkel7emil
+Stanislav Novitski - developer - Stani2980
 
 ### Initial To Do
 - Find dataset from kaggle
