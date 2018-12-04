@@ -9,11 +9,13 @@ def count_top_words_in_genre(genre, lyrics_df):
         ----------
         genre : str
             genre like 'Hip-Hop' or 'Pop'
-        language : pandas dataframe
-            dataframe with column 'most_used_words'
+        lyrics_df : pandas dataframe
+            clean dataframe
         Returns
             return list of top words of genre
     """
+    lyrics_df['most_used_words'] = pd.Series(collections.Counter(lyrics.split())
+                                    .most_common(10) for _, lyrics in lyrics_df['lyrics'].iteritems())
     arr = np.array(lyrics_df[lyrics_df['genre'] == genre]['most_used_words'].tolist()) # merges row's most_used_word column to list
     arr = arr[~pd.isna(arr)] # removing nans'
     flat_list = [item for sublist in arr for item in sublist] # converts array of arrays to one big array
