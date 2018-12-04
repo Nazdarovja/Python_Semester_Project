@@ -32,15 +32,20 @@ The goal is to be able to feed the network lyrics from an "unknown" song, and ha
 
 ### ideas / sources
 https://tmthyjames.github.io/2018/february/Predicting-Musical-Genres/
+
 https://www.kaggle.com/corizzi/lyrics-genre-analysis-machine-learning
+
 https://pypi.org/project/langdetect/
 
 
 ## Authors
-Alexander W. Hørsted-Andersen - developer - awha86
-Mathias Bigler - developer - Zurina
-Mikkel Emil Larsen - developer - mikkel7emil
-Stanislav Novitski - developer - Stani2980
+
+* **Alexander W. Hørsted-Andersen** - *developer* - [awha86](https://github.com/awha86)
+* **Mathias Bigler** - *developer* - [Zurina](https://github.com/Zurina)
+* **Mikkel Emil Larsen** - *developer* - [mikkel7emil](https://github.com/mikkel7emil)
+* **Stanislav Novitski** - *developer* - [Stani2980](https://github.com/Stani2980)
+  
+
 
 ### Initial To Do
 - Identify X genres to focus on, and how many songs/lyrics to use from each
