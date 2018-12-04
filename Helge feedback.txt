@@ -1,0 +1,21 @@
+04-12-2018
+- virker ok, vi kal bare køre på. 
+
+
+INPUT
+
+3 tilgange til det neurale netværk:
+
+1) Gøre det manuelt i hånden:
+	- opgave med neural netværk, tilpas til vores model. Copy-paste noget der kører.
+
+2) "Neurale netværk tools".
+	- TensorFlow tutorial: finde noget der "virker fornuftigt". "hvordan bygger jeg et X layeret neuralt netværk hvor jeg bstemmer noderne, i tensorflow". Er nok meget hurtigere end at gøre det i hånden. 
+	Pytorch -> også et godt bud 
+	- The Keras Blog
+
+3) Bog: "Data science from scratch" [hvordan repræsenterer vi text som værdier, fram bunden]
+	- Kapitel 13: Afsnit om spamfilter, gode eksempler.
+	- Anden mulighed: Fra bogen, forskellige modeller/tilgange, fx Topic Modelling.. Se på kapitel 20
+	
+4 (eller til slut)) - Se på intro slides (første dag(e) fra Helge, se link "A Whirlwind Tour to Python", Se på Forfatterens værker, han har vist noget om gode Neural Network tools to use... han snakker i hvert fald om forskellige slags features; dem der ligger på "continous scala" (0-100 og så "categorical features" (voksen legetøj, børne legetøj). 
