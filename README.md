@@ -1,5 +1,10 @@
 # Python_Semester_Project
 
+# Dependency requirements
+- Anacondas Python distribution
+- `$pip install langdetect` - Google language detection lib
+- `$pip install nltk` - Natural language toolkit lib
+
 ## Project Idea:
 
 - Machine Learning with lyrics from [kaggle.com or other] to identify a songs genre by its lyrics; Input a song and get an estimation of its genre. 
@@ -38,7 +43,6 @@ Mikkel Emil Larsen - developer - mikkel7emil
 Stanislav Novitski - developer - Stani2980
 
 ### Initial To Do
-- Find dataset from kaggle
 - Identify X genres to focus on, and how many songs/lyrics to use from each
 - Massage data: remove non english songs, cleanup date etc.
 - Write logic to identify top X most used words (per genre)
