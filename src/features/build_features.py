@@ -25,6 +25,8 @@ def count_top_words_in_genre(genre, lyrics_df):
     top_words = collections.Counter(genre_dict)
     return top_words.most_common(10)
 
+def 
+
 def word_count_series(series):
     '''
     returns pandas.Series object with num of words
