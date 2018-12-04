@@ -3,6 +3,7 @@ import collections
 import numpy as np
 from src.data.make_dataset import create_dataset
 from src.data.util import _clean_lyrics,_detect_english_string, clean_puta_words
+from src.features.build_features import count_top_words_in_genre
 
 if __name__ == "__main__":
     # Creating the dataset, unzip, 

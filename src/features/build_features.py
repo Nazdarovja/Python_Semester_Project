@@ -22,3 +22,22 @@ def count_top_words_in_genre(genre, lyrics_df):
         genre_dict[tupl[0]] = genre_dict.get(tupl[0], 0) + tupl[1] # sums up total occurances of each word
     top_words = collections.Counter(genre_dict)
     return top_words.most_common(10)
+
+def word_count_series(series):
+    '''
+    returns pandas.Series object with num of words
+
+    params:
+        series (pandas.Series): string of words
+
+    returns:
+        (pandas.Series): num of words
+    '''
+    series_word_count = series.apply(lambda words: _count_words(words))
+    return series_word_count
+
+def _count_words(words):
+    try:
+        return len(words.split())
+    except:
+        return 0 #TODO: better error handling, maybe not return 0
