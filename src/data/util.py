@@ -1,5 +1,4 @@
 import zipfile
-import os.path
 import os
 import pandas as pd
 import numpy as np
@@ -14,10 +13,10 @@ def unzip_file():
 
     """
     file_name = 'lyrics.csv.zip'
-    path_to_zip_file = f'data/raw/{file_name}'
-    directory_to_extract_to = f'data/external/'
+    path_to_zip_file = os.path.join('data','raw',file_name)
+    directory_to_extract_to = os.path.join('data','external')
     
-    if os.path.isfile(f'{directory_to_extract_to}/lyrics.csv'):
+    if os.path.isfile(os.path.join(directory_to_extract_to,'lyrics.csv')):
         print('Skipping unzip...')
     else:
         print('Unzipping file...')
@@ -81,18 +80,21 @@ def filter_dataframe(lyrics_df, no_of_songs = 5000, list_of_genres= ['Pop', 'Hip
     # filtered_df['lyrics'] = filtered_df['lyrics'].progress_apply(lambda x: clean_words(x)) # cleaning the dataset for meaningless words
 
     # Parallel lang detection
-    filtered_df = parralize_language_detection(filtered_df)
+    filtered_df = _parallelize_language_detection(filtered_df)
     
     # DEBUG FOR TESTING
     # genres = filtered_df['genre'].groupby(filtered_df['genre']).count() # groups the dataset by genre and counts the amount of each genre
-    
+    # print(genres)
+
     # Create pickle file for training data
-    create_pickle(filtered_df[:4000], 'traning_data.pkl')
+    traning_data_df = filtered_df[:4000].reset_index(drop=True)
+    _create_pickle(traning_data_df, 'training_data.pkl')
     # Create pickle file for test data
-    create_pickle(filtered_df[4000:4250], 'test_data.pkl')
+    test_data_df = filtered_df[4000:4250].reset_index(drop=True)
+    _create_pickle(test_data_df, 'test_data.pkl')
 
 
-def create_pickle(df, file_name):
+def _create_pickle(df, file_name):
     """
         Removes punctuations and lowercases the string.
 
@@ -101,8 +103,8 @@ def create_pickle(df, file_name):
         df : pandas.DataFrame
             genre/lyrics dataframe
     """
-    INTERIM_PATH = 'data/interim'
-    df.to_pickle(f'{INTERIM_PATH}/{file_name}')
+    path = os.path.join('data','interim',file_name)
+    df.to_pickle(path)
 
 def _clean_lyrics(lyrics):
     """
@@ -140,7 +142,7 @@ def _clean_lyrics(lyrics):
     
     return None
 
-def detect_english_string(input_string, language= 'en'):
+def _detect_english_string(input_string, language= 'en'):
     """
     Detect the language of the text.
     Parameters
@@ -160,7 +162,7 @@ def detect_english_string(input_string, language= 'en'):
         return False
     return val
 
-def clean_words(lyrics):
+def _clean_words(lyrics):
     stop_words = ['i', 'like', 'me', 'you', 'it', "it's", 'too', 'to', 'nan', 'the', 'and', 'a']
     words = lyrics.split()
     for idx, word in enumerate(words): 
@@ -168,12 +170,12 @@ def clean_words(lyrics):
             words.pop(idx)
     return " ".join(words)
 
-def process(df):
+def _process(df):
     tqdm.pandas(desc="Checking language...")
-    filtered_mask = df['lyrics'].progress_apply(lambda x: detect_english_string(x))
+    filtered_mask = df['lyrics'].progress_apply(lambda x: _detect_english_string(x))
     return df[filtered_mask]
 
-def parralize_language_detection(df):
+def _parallelize_language_detection(df):
 
     # Get cpu_count
     CPUS = os.cpu_count()
@@ -183,7 +185,7 @@ def parralize_language_detection(df):
 
     # parralize
     p = Pool(CPUS)
-    array_of_dfs = p.map(process, array_of_dfs)
+    array_of_dfs = p.map(_process, array_of_dfs)
 
     # concat arrays of genres_dfs
     result_df = pd.DataFrame()
