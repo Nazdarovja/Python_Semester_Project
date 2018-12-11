@@ -1,4 +1,7 @@
+import os
+import pandas as pd
 from src.data.util import unzip_file, get_dataframe_from_path, filter_dataframe
+
 
 def create_dataset():
     """
@@ -14,11 +17,23 @@ def create_dataset():
     # Unzips file if not unzipped yet
     unzip_file()
 
-    # Get and create dataframe
-    EXTERNAL_PATH = 'data/external/lyrics.csv.zip/lyrics.csv'
-    lyrics_df = get_dataframe_from_path(EXTERNAL_PATH) ########### TBD : add check so we dont get the dataframe again if we have an already filtered and ready one.
+    # Constants
+    TRANING_DATA_PATH = os.path.join('data','interim','training_data.pkl')
+    TEST_DATA_PATH = os.path.join('data','interim','test_data.pkl')
 
-    # Filter dataset
-    filter_dataframe(lyrics_df) ## function not done
+    if (not os.path.isfile(TRANING_DATA_PATH)) and (not os.path.isfile(TEST_DATA_PATH)):
+        print('Filtering data...')
+        
+        # Get and create dataframe
+        EXTERNAL_PATH = os.path.join('data','external','lyrics.csv.zip','lyrics.csv')
+        lyrics_df = get_dataframe_from_path(EXTERNAL_PATH)
 
-    return lyrics_df
+        # Filter dataset
+        filter_dataframe(lyrics_df) ## function not done
+    else: 
+        print('Skipping data filtering...')
+    
+    traning_data_df = pd.read_pickle(TRANING_DATA_PATH)
+    test_data_df = pd.read_pickle(TEST_DATA_PATH)
+    
+    return (traning_data_df, test_data_df)

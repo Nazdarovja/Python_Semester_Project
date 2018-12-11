@@ -5,4 +5,7 @@ from src.data.make_dataset import create_dataset
 
 if __name__ == "__main__":
     # Creating the dataset, unzip, 
-    lyrics_df = create_dataset()
+    traning_data_df, test_data_df = create_dataset()
+
+    print(traning_data_df.head())
+    print(test_data_df.head())

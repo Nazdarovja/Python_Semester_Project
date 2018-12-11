@@ -8,18 +8,15 @@ from tqdm import tqdm
 from src.features.build_features import count_top_words_in_genre
 from multiprocessing import Pool
 
-
-
-
-file_name = 'lyrics.csv.zip'
-path_to_zip_file = f'data/raw/{file_name}'
-directory_to_extract_to = f'data/external/'
-
 def unzip_file():
     """
         If not done yet unzips the raw file and adds to ~/data/external folder
 
     """
+    file_name = 'lyrics.csv.zip'
+    path_to_zip_file = f'data/raw/{file_name}'
+    directory_to_extract_to = f'data/external/'
+    
     if os.path.isfile(f'{directory_to_extract_to}/lyrics.csv'):
         print('Skipping unzip...')
     else:
@@ -73,22 +70,39 @@ def filter_dataframe(lyrics_df, no_of_songs = 5000, list_of_genres= ['Pop', 'Hip
         pandas.DataFrame
             Dataframe with requested objects.
     """
-    filtered_df = pd.DataFrame()
-    tqdm.pandas(desc="Processing data...")
+    
+    filtered_df = pd.DataFrame() # empty df for data
+    tqdm.pandas(desc="Processing data...") # setup tqdm
+    
+    #
     for genre in list_of_genres:
         filtered_df = filtered_df.append(lyrics_df[lyrics_df['genre'] == genre][:no_of_songs] )
 
-    filtered_df['lyrics'] = filtered_df['lyrics'].progress_apply(lambda x: clean_words(x)) # cleaning the dataset for meaningless words
+    # filtered_df['lyrics'] = filtered_df['lyrics'].progress_apply(lambda x: clean_words(x)) # cleaning the dataset for meaningless words
 
-    # lang_mask = filtered_df['lyrics'].progress_apply(lambda x: detect_english_string(x))
-    
-    # filtered_df = filtered_df[lang_mask]
-
+    # Parallel lang detection
     filtered_df = parralize_language_detection(filtered_df)
     
-    genres = filtered_df['genre'].groupby(filtered_df['genre']).count() # groups the dataset by genre and counts the amount of each genre
+    # DEBUG FOR TESTING
+    # genres = filtered_df['genre'].groupby(filtered_df['genre']).count() # groups the dataset by genre and counts the amount of each genre
     
-    print (genres)
+    # Create pickle file for training data
+    create_pickle(filtered_df[:4000], 'traning_data.pkl')
+    # Create pickle file for test data
+    create_pickle(filtered_df[4000:4250], 'test_data.pkl')
+
+
+def create_pickle(df, file_name):
+    """
+        Removes punctuations and lowercases the string.
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            genre/lyrics dataframe
+    """
+    INTERIM_PATH = 'data/interim'
+    df.to_pickle(f'{INTERIM_PATH}/{file_name}')
 
 def _clean_lyrics(lyrics):
     """
@@ -155,7 +169,7 @@ def clean_words(lyrics):
     return " ".join(words)
 
 def process(df):
-    tqdm.pandas(desc="Processing data...")
+    tqdm.pandas(desc="Checking language...")
     filtered_mask = df['lyrics'].progress_apply(lambda x: detect_english_string(x))
     return df[filtered_mask]
 
