@@ -3,8 +3,11 @@ import os.path
 import pandas as pd
 from langdetect import detect
 from tqdm import tqdm
-
 from src.features.build_features import count_top_words_in_genre
+from multiprocessing import Pool
+
+
+
 
 file_name = 'lyrics.csv.zip'
 path_to_zip_file = f'data/raw/{file_name}'
@@ -75,9 +78,11 @@ def filter_dataframe(lyrics_df, no_of_songs = 5000, list_of_genres= ['Pop', 'Hip
 
     filtered_df['lyrics'] = filtered_df['lyrics'].progress_apply(lambda x: clean_words(x)) # cleaning the dataset for meaningless words
 
-    lang_mask = filtered_df['lyrics'].progress_apply(lambda x: _detect_english_string(x))
+    # lang_mask = filtered_df['lyrics'].progress_apply(lambda x: detect_english_string(x))
     
-    filtered_df = filtered_df[lang_mask]
+    # filtered_df = filtered_df[lang_mask]
+
+    filtered_df = parralize_language_detection(filtered_df)
     
     genres = filtered_df['genre'].groupby(filtered_df['genre']).count() # groups the dataset by genre and counts the amount of each genre
     
@@ -119,7 +124,7 @@ def _clean_lyrics(lyrics):
     
     return None
 
-def _detect_english_string(input_string, language= 'en'):
+def detect_english_string(input_string, language= 'en'):
     """
     Detect the language of the text.
     Parameters
@@ -146,3 +151,22 @@ def clean_words(lyrics):
         if word in stop_words: # makes it O(1) because it's a Set (unique values), just like hashamp
             words.pop(idx)
     return " ".join(words)
+
+def process(df):
+    tqdm.pandas(desc="Processing data...")
+    filtered_mask = df['lyrics'].progress_apply(lambda x: detect_english_string(x))
+    return df[filtered_mask]
+
+def parralize_language_detection(df):
+    # split df up into genres
+    array_of_dfs = [df[df['genre'] == 'Pop'], df[df['genre'] == 'Rock'], df[df['genre'] == 'Hip-Hop']]
+
+    # parralize
+    p = Pool(4)
+    array_of_dfs = p.map(process, array_of_dfs)
+
+    # concat arrays of genres_dfs
+    result_df = pd.DataFrame()
+    for genre_df in array_of_dfs:
+        result_df = result_df.append(genre_df)
+    return result_df
