@@ -1,6 +1,7 @@
 import pandas as pd
 import collections
 import numpy as np
+from src.data.make_dataset import create_dataset
 
 def count_top_words_in_genre(genre, lyrics_df):
     """
@@ -43,3 +44,4 @@ def _count_words(words):
         return len(words.split())
     except:
         return 0 #TODO: better error handling, maybe not return 0
+

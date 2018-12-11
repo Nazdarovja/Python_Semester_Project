@@ -15,7 +15,7 @@ def create_dataset():
     unzip_file()
 
     # Get and create dataframe
-    EXTERNAL_PATH = 'data/external/lyrics.csv.zip/lyrics.csv'
+    EXTERNAL_PATH = 'data/external/lyrics.csv'
     lyrics_df = get_dataframe_from_path(EXTERNAL_PATH) ########### TBD : add check so we dont get the dataframe again if we have an already filtered and ready one.
 
     # Filter dataset
