@@ -2,6 +2,9 @@ import zipfile
 import os.path
 import pandas as pd
 from langdetect import detect
+from tqdm import tqdm
+
+from src.features.build_features import count_top_words_in_genre
 
 file_name = 'lyrics.csv.zip'
 path_to_zip_file = f'data/raw/{file_name}'
@@ -47,7 +50,7 @@ def get_dataframe_from_path(csv_file_path):
 
     return lyrics_df
 
-def filter_dataframe(lyrics_df, no_of_songs = 100, list_of_genres= ['Pop', 'Hip-Hop','Country'], language = 'en'):
+def filter_dataframe(lyrics_df, no_of_songs = 5000, list_of_genres= ['Pop', 'Hip-Hop','Rock'], language = 'en'):
     """
         Given filter parameters, returns new filtered pandas.DataFrame
 
@@ -55,9 +58,9 @@ def filter_dataframe(lyrics_df, no_of_songs = 100, list_of_genres= ['Pop', 'Hip-
         ----------
             lyrics_df : pandas.DataFrame
                 Cleaned dataset
-            no_of_songs : int (default value : 100)
+            no_of_songs : int (default value : 5000)
                 Number of songs to return from each category
-            list_of_genres : list (default value : ['Pop', 'Hip-Hop','Country'] )
+            list_of_genres : list (default value : ['Pop', 'Hip-Hop','Rock'] )
                 Genres to filter by
 
         Returns
@@ -65,12 +68,19 @@ def filter_dataframe(lyrics_df, no_of_songs = 100, list_of_genres= ['Pop', 'Hip-
         pandas.DataFrame
             Dataframe with requested objects.
     """
-    ### insert cool method here
-    ##################### TBD ################ 
+    filtered_df = pd.DataFrame()
+    tqdm.pandas(desc="Processing data...")
+    for genre in list_of_genres:
+        filtered_df = filtered_df.append(lyrics_df[lyrics_df['genre'] == genre][:no_of_songs] )
 
-    #### Language thing is veeeery slow, so first filter data.
-    pass
+    filtered_df['lyrics'] = filtered_df['lyrics'].progress_apply(lambda x: clean_words(x)) # cleaning the dataset for meaningless words
 
+    lang_mask = filtered_df['lyrics'].progress_apply(lambda x: _detect_english_string(x))
+    filtered_df = filtered_df[lang_mask]
+    
+    genres = filtered_df['genre'].groupby(filtered_df['genre']).count() # groups the dataset by genre and counts the amount of each genre
+    
+    print (genres)
 
 def _clean_lyrics(lyrics):
     """
@@ -128,7 +138,7 @@ def _detect_english_string(input_string, language= 'en'):
         return False
     return val
 
-def clean_puta_words(lyrics):
+def clean_words(lyrics):
     stop_words = ['i', 'like', 'me', 'you', 'it', "it's", 'too', 'to', 'nan', 'the', 'and', 'a']
     words = lyrics.split()
     for idx, word in enumerate(words): 

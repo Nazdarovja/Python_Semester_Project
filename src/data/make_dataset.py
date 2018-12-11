@@ -19,6 +19,6 @@ def create_dataset():
     lyrics_df = get_dataframe_from_path(EXTERNAL_PATH) ########### TBD : add check so we dont get the dataframe again if we have an already filtered and ready one.
 
     # Filter dataset
-    # lyrics_df = filter_dataframe(lyrics_df) ## function not done
+    filter_dataframe(lyrics_df) ## function not done
 
     return lyrics_df
