@@ -6,6 +6,7 @@
 # Data files
 *.csv
 lyrics.csv.zip/
+*.pkl
 
 ### macOS ###
 # General
