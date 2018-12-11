@@ -1,6 +1,8 @@
 import zipfile
 import os.path
+import os
 import pandas as pd
+import numpy as np
 from langdetect import detect
 from tqdm import tqdm
 from src.features.build_features import count_top_words_in_genre
@@ -158,11 +160,15 @@ def process(df):
     return df[filtered_mask]
 
 def parralize_language_detection(df):
-    # split df up into genres
-    array_of_dfs = [df[df['genre'] == 'Pop'], df[df['genre'] == 'Rock'], df[df['genre'] == 'Hip-Hop']]
+
+    # Get cpu_count
+    CPUS = os.cpu_count()
+
+    # Split dataframe into cpu amount
+    array_of_dfs = np.split(df, CPUS)
 
     # parralize
-    p = Pool(4)
+    p = Pool(CPUS)
     array_of_dfs = p.map(process, array_of_dfs)
 
     # concat arrays of genres_dfs
