@@ -76,6 +76,7 @@ def filter_dataframe(lyrics_df, no_of_songs = 5000, list_of_genres= ['Pop', 'Hip
     filtered_df['lyrics'] = filtered_df['lyrics'].progress_apply(lambda x: clean_words(x)) # cleaning the dataset for meaningless words
 
     lang_mask = filtered_df['lyrics'].progress_apply(lambda x: _detect_english_string(x))
+    
     filtered_df = filtered_df[lang_mask]
     
     genres = filtered_df['genre'].groupby(filtered_df['genre']).count() # groups the dataset by genre and counts the amount of each genre
