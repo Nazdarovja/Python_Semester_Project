@@ -1,4 +1,7 @@
+import os
+import pandas as pd
 from src.data.util import unzip_file, get_dataframe_from_path, filter_dataframe
+
 
 def create_dataset():
     """
@@ -11,14 +14,40 @@ def create_dataset():
         containing the training data for the model.
 
     """
+
+    # Create paths if not existent
+    _create_paths()
     # Unzips file if not unzipped yet
     unzip_file()
 
-    # Get and create dataframe
-    EXTERNAL_PATH = 'data/external/lyrics.csv'
-    lyrics_df = get_dataframe_from_path(EXTERNAL_PATH) ########### TBD : add check so we dont get the dataframe again if we have an already filtered and ready one.
+    # Constants
+    TRAINING_DATA_PATH = os.path.join('data','interim','training_data.pkl')
+    TEST_DATA_PATH = os.path.join('data','interim','test_data.pkl')
+    
+    if (not os.path.isfile(TRAINING_DATA_PATH)) and (not os.path.isfile(TEST_DATA_PATH)):
+        print('Filtering data...')
+        
+        # Get and create dataframe
+        EXTERNAL_PATH = os.path.join('data','external','lyrics.csv')
+        lyrics_df = get_dataframe_from_path(EXTERNAL_PATH)
 
-    # Filter dataset
-    # lyrics_df = filter_dataframe(lyrics_df) ## function not done
+        # Filter dataset
+        filter_dataframe(lyrics_df) ## function not done
+    else: 
+        print('Skipping data filtering...')
+    
+    training_data_df = pd.read_pickle(TRAINING_DATA_PATH)
+    test_data_df = pd.read_pickle(TEST_DATA_PATH)
+    
+    return (training_data_df, test_data_df)
 
-    return lyrics_df
+def _create_paths():
+    print('Creating missing paths...')
+    if not os.path.isdir('data/external'):
+        os.mkdir('data/external')
+    
+    if not os.path.isdir('data/interim'):
+        os.mkdir('data/interim')
+
+    if not os.path.isdir('data/processed'):
+        os.mkdir('data/processed')
