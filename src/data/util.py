@@ -4,7 +4,6 @@ import pandas as pd
 import numpy as np
 from langdetect import detect
 from tqdm import tqdm
-from src.features.build_features import count_top_words_in_genre
 from multiprocessing import Pool
 
 def unzip_file():
@@ -86,11 +85,19 @@ def filter_dataframe(lyrics_df, no_of_songs = 5000, list_of_genres= ['Pop', 'Hip
     # genres = filtered_df['genre'].groupby(filtered_df['genre']).count() # groups the dataset by genre and counts the amount of each genre
     # print(genres)
 
+    traning_data_df = pd.DataFrame()
+    test_data_df = pd.DataFrame()
+
+    for genre in list_of_genres:
+        traning_data_df = traning_data_df.append(filtered_df[filtered_df['genre'] == genre][:4000])
+        test_data_df= test_data_df.append(filtered_df[filtered_df['genre'] == genre][4000:4250])
+    
+    traning_data_df.reset_index(drop=True)
+    test_data_df.reset_index(drop=True)
+
     # Create pickle file for training data
-    traning_data_df = filtered_df[:4000].reset_index(drop=True)
     _create_pickle(traning_data_df, 'training_data.pkl')
     # Create pickle file for test data
-    test_data_df = filtered_df[4000:4250].reset_index(drop=True)
     _create_pickle(test_data_df, 'test_data.pkl')
 
 
