@@ -26,22 +26,29 @@ def count_top_words_in_genre(genre, lyrics_df):
     top_words = collections.Counter(genre_dict)
     return top_words.most_common(10)
 
-def word_count_series(series):
-    '''
-    returns pandas.Series object with num of words
-
-    params:
-        series (pandas.Series): string of words
-
-    returns:
-        (pandas.Series): num of words
-    '''
-    series_word_count = series.apply(lambda words: _count_words(words))
-    return series_word_count
+def word_count(df, new_col_name, col_with_lyrics):
+    df = df.copy()
+    df[new_col_name] = df[col_with_lyrics].apply(lambda words: _count_words(words))
+    return df
 
 def _count_words(words):
     try:
         return len(words.split())
     except:
         return 0 #TODO: better error handling, maybe not return 0
+
+def sentence_avg_word_length(df, new_col_name, col_with_lyrics):
+    df = df.copy()
+    df[new_col_name] = df[col_with_lyrics].apply(_sentence_avg_word_length)
+    return df
+
+def _sentence_avg_word_length(sentence):
+    return sum(len(word.split()) for word in sentence) / len(sentence.split())
+
+def normalize(df, new_col_name, col_to_norm):
+    df = df.copy()
+    max = df[col_to_norm].max()
+
+    df[new_col_name] = df['word_count'].apply(lambda val: val / max)
+    return df
 

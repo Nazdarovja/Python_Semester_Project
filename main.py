@@ -2,10 +2,10 @@ import pandas as pd
 import collections
 import numpy as np
 from src.data.make_dataset import create_dataset
+from src.features.build_features import sentence_avg_word_length
 
 if __name__ == "__main__":
     # Creating the dataset, unzip, 
     training_data_df, test_data_df = create_dataset()
-
-    print(training_data_df.head())
-    print(test_data_df.head())
+    res = sentence_avg_word_length(training_data_df, "avg_word_len", "lyrics")
+    print(res)
