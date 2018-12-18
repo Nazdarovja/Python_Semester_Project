@@ -30,11 +30,19 @@ def analyze_word_class(df):
         (pandas.DataFrame): DataFrame with added
     '''
     df = df.copy()
-    tqdm.pandas(desc="Preparing Text classe analysis...")
+    tqdm.pandas(desc="Preparing Text class analysis...")
     blobs = df['lyrics'].progress_apply(lambda txt : TextBlob(txt).tags)
     tqdm.pandas(desc="Analyzing classes...")
+    
     df['nouns'] = blobs.progress_apply(lambda word_list: _count_word_class(word_list, 'NN'))
-
+    df['adverbs'] = blobs.progress_apply(lambda word_list: _count_word_class(word_list, 'RB'))
+    df['verbs'] = blobs.progress_apply(lambda word_list: _count_word_class(word_list, 'VB'))
+    
+    return df
 
 def _count_word_class(words, word_class):
-    pass
+    count = 0
+    for w in words:
+        if w[1] == word_class:
+            count = count +1
+    return count
