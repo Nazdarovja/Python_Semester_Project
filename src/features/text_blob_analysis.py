@@ -1,6 +1,9 @@
 from textblob import TextBlob
 import pandas as pd
 from tqdm import tqdm
+import os
+import numpy as np
+from multiprocessing import Pool
 
 def analyze_sentiment(df):
     '''
@@ -12,10 +15,11 @@ def analyze_sentiment(df):
     returns:
         (pandas.DataFrame): DataFrame with added sentiment analysis columns (polarity, subjectivity)
     '''
-    df = df.copy()
     tqdm.pandas(desc="Analyzing sentiment...")
     res = df['lyrics'].progress_apply(lambda txt : TextBlob(txt).sentiment)
+    tqdm.pandas(desc="Analyzing polarity...")
     df['polarity'] = res.progress_apply(lambda x: x[0])
+    tqdm.pandas(desc="Analyzing subjectivity...")
     df['subjectivity'] = res.progress_apply(lambda x: x[1])
     return df
 
@@ -29,11 +33,10 @@ def analyze_word_class(df):
     returns:
         (pandas.DataFrame): DataFrame with added
     '''
-    df = df.copy()
     tqdm.pandas(desc="Preparing Text class analysis...")
     blobs = df['lyrics'].progress_apply(lambda txt : TextBlob(txt).tags)
+
     tqdm.pandas(desc="Analyzing classes...")
-    
     df['nouns'] = blobs.progress_apply(lambda word_list: _count_word_class(word_list, 'NN'))
     df['adverbs'] = blobs.progress_apply(lambda word_list: _count_word_class(word_list, 'RB'))
     df['verbs'] = blobs.progress_apply(lambda word_list: _count_word_class(word_list, 'VB'))

@@ -26,7 +26,6 @@ def count_top_words_in_genre(genre, lyrics_df):
     return top_words.most_common(10)
 
 def word_count(df, new_col_name, col_with_lyrics):
-    df = df.copy()
     df[new_col_name] = df[col_with_lyrics].apply(lambda words: _count_words(words))
     return df
 
@@ -37,7 +36,6 @@ def _count_words(words):
         return 0 #TODO: better error handling, maybe not return 0
 
 def sentence_avg_word_length(df, new_col_name, col_with_lyrics):
-    df = df.copy()
     df[new_col_name] = df[col_with_lyrics].apply(_sentence_avg_word_length)
     return df
 

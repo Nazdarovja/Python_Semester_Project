@@ -5,7 +5,6 @@ def normalize(df, new_col_name, col_to_norm):
     '''
     ref: https://en.wikipedia.org/wiki/Normalization_(statistics)
     '''
-    df = df.copy()
     max = df[col_to_norm].max()
     min = df[col_to_norm].min()
 
@@ -23,7 +22,7 @@ def create_pickle(df, file_name):
         file name to create
     """
 
-    file_path = os.path.join('data','processed',file_name + '.pkl')
+    file_path = os.path.join('data','processed',file_name)
     
     if os.path.isfile(file_path):
         os.remove(file_path)
