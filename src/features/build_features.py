@@ -1,7 +1,6 @@
 import pandas as pd
 import collections
 import numpy as np
-from src.data.make_dataset import create_dataset
 
 def count_top_words_in_genre(genre, lyrics_df):
     """

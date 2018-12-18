@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from src.data.util import unzip_file, get_dataframe_from_path, filter_dataframe
+from .util import unzip_file, get_dataframe_from_path, filter_dataframe
 
 
 def create_dataset():
