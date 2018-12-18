@@ -17,8 +17,8 @@ if __name__ == "__main__":
     res = sentence_avg_word_length(training_data_df, "avg_word_len", "lyrics")
     print(res)
 
-    plotting(res)
-    # # plotting(res)
+    #plotting(res) PLOTTING STUFF HÆHÆHÆHÆHÆHÆ
+
     TRAINING_PKL = 'training_data.pkl'
     df = pd.read_pickle(os.path.join('data','processed',TRAINING_PKL))
 
