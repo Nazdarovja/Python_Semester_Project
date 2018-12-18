@@ -43,12 +43,13 @@ def sentence_avg_word_length(df, new_col_name, col_with_lyrics):
     return df
 
 def _sentence_avg_word_length(sentence):
-    return sum(len(word.split()) for word in sentence) / len(sentence.split())
+    res = sum(len(word.split()) for word in sentence) / len(sentence.split())**3
+    return res
 
 def normalize(df, new_col_name, col_to_norm):
     df = df.copy()
     max = df[col_to_norm].max()
 
-    df[new_col_name] = df['word_count'].apply(lambda val: val / max)
+    df[new_col_name] = df[col_to_norm].apply(lambda val: val / max)
     return df
 
