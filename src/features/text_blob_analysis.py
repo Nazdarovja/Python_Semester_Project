@@ -45,4 +45,4 @@ def _count_word_class(words, word_class):
     for w in words:
         if w[1] == word_class:
             count = count +1
-    return count
+    return count/100
