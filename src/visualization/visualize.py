@@ -2,14 +2,14 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from textblob import TextBlob
 from src.features.build_features import normalize, word_count, sentence_avg_word_length
-from src.features.text_blob_analysis import analyze_sentiment, analyze_word_class
+from src.features.text_blob_analysis import analyze_sentiment, analyze_word_class_for_plotting
 
 def plotting(df):
     # plot_genre_and_word_count(df)
-    # plot_genre_and_avg_word_len(df)
+    plot_genre_and_avg_word_len(df)
     # plot_sentiment_analysis(df)
     # plot_genre_and_normalized_word_count(df)
-    plot_word_class_pr_genre(df)
+    # plot_word_class_pr_genre(df)
 
 def plot_genre_and_word_count(df):
     """
@@ -46,7 +46,6 @@ def plot_genre_and_normalized_word_count(df):
     df = normalize(df, 'normalized_word_count', 'word_count')
 
     plotting_helper_method('normalized_word_count', 'genre', df)
-
     plt.title('Normalized Word count pr. genre')
     plt.xlabel('Normalized Word Count')
     plt.ylabel('Genre')
@@ -67,6 +66,7 @@ def plot_genre_and_avg_word_len(df):
     df = sentence_avg_word_length(df, 'avg_word_len', 'lyrics')
 
     plotting_helper_method('avg_word_len', 'genre', df)
+    plt.xlim(0, 0.0002)
 
     plt.title('Average Word Length pr. genre')
     plt.xlabel('Average Word Length')
@@ -107,7 +107,7 @@ def plot_word_class_pr_genre(df):
             with different colors representing each genre.
     """
 
-    df = analyze_word_class(df.sample(frac=1).reset_index(drop=True)[:1000])
+    df = analyze_word_class_for_plotting(df.sample(frac=1).reset_index(drop=True)[:1000])
 
     # plotting nouns
     plotting_helper_method('nouns', 'genre', df)

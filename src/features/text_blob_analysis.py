@@ -44,5 +44,33 @@ def _count_word_class(words, word_class):
     count = 0
     for w in words:
         if w[1] == word_class:
-            count = count +1
+            count = count + 1
     return count / 100
+
+def analyze_word_class_for_plotting(df):
+    '''
+    returns pandas.DataFrame with added columns with polarity and subjectivity 
+
+    params:
+        df (pandas.DataFrame): DataFrame of song lyrics
+
+    returns:
+        (pandas.DataFrame): DataFrame with added
+    '''
+    df = df.copy()
+    tqdm.pandas(desc="Preparing Text class analysis...")
+    blobs = df['lyrics'].progress_apply(lambda txt : TextBlob(txt).tags)
+    tqdm.pandas(desc="Analyzing classes...")
+    
+    df['nouns'] = blobs.progress_apply(lambda word_list: _count_word_class_for_plotting(word_list, 'NN'))
+    df['adverbs'] = blobs.progress_apply(lambda word_list: _count_word_class_for_plotting(word_list, 'RB'))
+    df['verbs'] = blobs.progress_apply(lambda word_list: _count_word_class_for_plotting(word_list, 'VB'))
+    
+    return df
+
+def _count_word_class_for_plotting(words, word_class):
+    count = 0
+    for w in words:
+        if w[1] == word_class:
+            count = count + 1
+    return count / len(words) * 100
