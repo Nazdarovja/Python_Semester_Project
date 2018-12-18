@@ -5,11 +5,11 @@ from src.features.build_features import normalize, word_count, sentence_avg_word
 from src.features.text_blob_analysis import analyze_sentiment, analyze_word_class_for_plotting
 
 def plotting(df):
-    # plot_genre_and_word_count(df)
+    plot_genre_and_word_count(df)
     plot_genre_and_avg_word_len(df)
-    # plot_sentiment_analysis(df)
-    # plot_genre_and_normalized_word_count(df)
-    # plot_word_class_pr_genre(df)
+    plot_sentiment_analysis(df)
+    plot_genre_and_normalized_word_count(df)
+    plot_word_class_pr_genre(df)
 
 def plot_genre_and_word_count(df):
     """
