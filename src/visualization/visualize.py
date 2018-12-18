@@ -9,7 +9,7 @@ def plotting(df):
     directory = 'src/visualization/feature_plots'
     if not os.path.exists(directory):
         os.makedirs(directory)
-        
+
     plot_genre_and_word_count(df)
     plot_genre_and_avg_word_len(df)
     plot_sentiment_analysis(df)
@@ -34,8 +34,8 @@ def plot_genre_and_word_count(df):
     plt.xlabel('Word Count')
     plt.ylabel('Genre')
     plt.legend()
-    # plt.show()
-    plt.savefig('src/visualization/feature_plots/word_count_plot')
+    plt.show()
+    # plt.savefig('src/visualization/feature_plots/word_count_plot')
 
 def plot_genre_and_normalized_word_count(df):
     """
@@ -56,8 +56,8 @@ def plot_genre_and_normalized_word_count(df):
     plt.xlabel('Normalized Word Count')
     plt.ylabel('Genre')
     plt.legend()
-    # plt.show()
-    plt.savefig('src/visualization/feature_plots/normalized_word_count_plot')
+    plt.show()
+    # plt.savefig('src/visualization/feature_plots/normalized_word_count_plot')
     
 def plot_genre_and_avg_word_len(df):
     """
@@ -73,14 +73,14 @@ def plot_genre_and_avg_word_len(df):
     df = sentence_avg_word_length(df, 'avg_word_len', 'lyrics')
 
     plotting_helper_method('avg_word_len', 'genre', df)
-    plt.xlim(0, 0.0002)
+    plt.xlim(0, 0.002)
 
     plt.title('Average Word Length pr. genre')
     plt.xlabel('Average Word Length')
     plt.ylabel('Genre')
     plt.legend()
-    # plt.show()
-    plt.savefig('src/visualization/feature_plots/average_word_length')
+    plt.show()
+    # plt.savefig('src/visualization/feature_plots/average_word_length')
 
 def plot_sentiment_analysis(df):
     """
@@ -101,8 +101,8 @@ def plot_sentiment_analysis(df):
     plt.xlabel('Polarity')
     plt.ylabel('Subjectivity')
     plt.legend()
-    # plt.show()
-    plt.savefig('src/visualization/feature_plots/sentiment_analysis_plot')
+    plt.show()
+    # plt.savefig('src/visualization/feature_plots/sentiment_analysis_plot')
 
 def plot_word_class_pr_genre(df):
     """
@@ -123,8 +123,8 @@ def plot_word_class_pr_genre(df):
     plt.xlabel("Percentage of nouns in each song")
     plt.ylabel('Genre')
     plt.legend()
-    # plt.show()
-    plt.savefig('src/visualization/feature_plots/nouns_pr_genre_plot')
+    plt.show()
+    # plt.savefig('src/visualization/feature_plots/nouns_pr_genre_plot')
 
     # plotting verbs
     plotting_helper_method('verbs', 'genre', df)
@@ -132,8 +132,8 @@ def plot_word_class_pr_genre(df):
     plt.xlabel('Percentage of verbs in each song')
     plt.ylabel('Genre')
     plt.legend()
-    # plt.show()
-    plt.savefig('src/visualization/feature_plots/verbs_pr_genre_plot')
+    plt.show()
+    # plt.savefig('src/visualization/feature_plots/verbs_pr_genre_plot')
 
     # plotting adverbs
     plotting_helper_method('adverbs', 'genre', df)
@@ -141,8 +141,8 @@ def plot_word_class_pr_genre(df):
     plt.xlabel('Percentage of adverbs in each song')
     plt.ylabel('Genre')
     plt.legend()
-    # plt.show()
-    plt.savefig('src/visualization/feature_plots/adverbs_pr_genre_plot')
+    plt.show()
+    # plt.savefig('src/visualization/feature_plots/adverbs_pr_genre_plot')
 
     # Circle diagram of each genre's average word classes distribution
     circle_diagram_helper_method(df)
@@ -182,6 +182,6 @@ def circle_diagram_helper_method(df):
         ax1.axis('equal')  
         plt.tight_layout()
         plt.title(f'Circle diagram of the genre "{genre}"s average word classes distribution')
-        # plt.show()
-        plt.savefig(f'src/visualization/feature_plots/{genre}_word_class_distribution')
+        plt.show()
+        # plt.savefig(f'src/visualization/feature_plots/{genre}_word_class_distribution')
 
