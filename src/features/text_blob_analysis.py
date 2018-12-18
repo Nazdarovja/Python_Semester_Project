@@ -45,4 +45,8 @@ def _count_word_class(words, word_class):
     for w in words:
         if w[1] == word_class:
             count = count +1
+<<<<<<< HEAD
     return count / len(words)
+=======
+    return count/100
+>>>>>>> 707bec6f57bb94ea5ae38862a8067e1828882dfc
