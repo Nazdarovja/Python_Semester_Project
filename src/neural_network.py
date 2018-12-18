@@ -4,10 +4,29 @@ import math,random
 from tqdm import tqdm
 from random import shuffle
 import pandas as pd
+import os
+
 from .features.build_features import word_count, sentence_avg_word_length, normalize
 from .features.text_blob_analysis import analyze_sentiment, analyze_word_class
 from .data.make_dataset import create_dataset
 from .data.util import unzip_file
+
+def _create_pickle(df, file_name):
+    """
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        genre/lyrics dataframe
+    file_name: str
+        file name to create
+    """
+
+    file_path = os.path.join('data','processed',file_name)
+    
+    if os.path.isfile(file_path):
+        os.remove(file_path)
+
+    df.to_pickle(file_path)
 
 def step_function(x):
     return 1 if x >= 0 else 0
@@ -91,13 +110,22 @@ output_size = 3 # antal af output noder (i vores tilfælde, genres)
 series = df['genre'].value_counts()
 genre_labels = series.keys() # getting genre labels
 
-# adding features as series to the dataframe
-df = sentence_avg_word_length(df,"avg_word_len", 'lyrics')
-df = normalize(df, 'avg_word_len_nm', 'avg_word_len')
-df = word_count(df,"word_count", 'lyrics')
-df = normalize(df, 'word_count_nm', 'word_count')
-df = analyze_sentiment(df)
-df = analyze_word_class(df)
+TRAINING_PKL = 'training_data.pkl'
+if not os.path.isfile(os.path.join('data','processed',TRAINING_PKL)):
+    print('Do you wish to create new test data ? y/n')
+    choice = input()
+    if choice == 'y':
+        # adding features as series to the dataframe
+        df = sentence_avg_word_length(df,"avg_word_len", 'lyrics')
+        df = normalize(df, 'avg_word_len_nm', 'avg_word_len')
+        df = word_count(df,"word_count", 'lyrics')
+        df = normalize(df, 'word_count_nm', 'word_count')
+        df = analyze_sentiment(df)
+        df = analyze_word_class(df)
+
+        _create_pickle(df,TRAINING_PKL)
+else:
+    df = pd.read_pickle(os.path.join('data','processed',TRAINING_PKL))
 
 # grapping features for training
 avg_word_len = df['avg_word_len_nm']
@@ -148,7 +176,7 @@ verbs = test_df['verbs']
 
 # Create feature list
 test_features = [[f, p, s, n, a, v, wl] for f, p, s, n, a, v, wl in zip(words, polarity, subjectivity, nouns, adverbs, verbs, avg_word_len)]
-
+print(test_features)
 # Testing
 print("Testing...:") 
 
@@ -163,3 +191,5 @@ for test, t in zip(test_features, test_df['genre']):
         print(t)
         
 print(count)
+
+
