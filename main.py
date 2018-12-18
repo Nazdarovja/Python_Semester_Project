@@ -40,5 +40,7 @@ if __name__ == "__main__":
     
     network = train(inputs, targets, 500)
 
-    res = predict([0.71148825065274152, 0.22561965811965812, 0.129914529914531, 0.2506896551724138, 0.0513455968010067,1,1], network)
-    print(res)
+    for i in inputs[:100]:
+    # res = predict([0.71148825065274152, 0.22561965811965812, 0.129914529914531, 0.2506896551724138, 0.0513455968010067,1,1], network)
+        res = predict(i, network)
+        print(res)
