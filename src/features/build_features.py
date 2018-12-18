@@ -46,9 +46,13 @@ def _sentence_avg_word_length(sentence):
     return sum(len(word.split()) for word in sentence) / len(sentence.split())
 
 def normalize(df, new_col_name, col_to_norm):
+    '''
+    ref: https://en.wikipedia.org/wiki/Normalization_(statistics)
+    '''
     df = df.copy()
     max = df[col_to_norm].max()
+    min = df[col_to_norm].min()
 
-    df[new_col_name] = df['word_count'].apply(lambda val: val / max)
+    df[new_col_name] = df[col_to_norm].apply(lambda val: (val-min)/(max-min))
     return df
 
