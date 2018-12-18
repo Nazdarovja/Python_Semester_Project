@@ -68,8 +68,8 @@ def plot_genre_and_avg_word_len(df):
 
     plotting_helper_method('avg_word_len', 'genre', df)
 
-    plt.title('Average Word count pr. genre')
-    plt.xlabel('Average Word Count')
+    plt.title('Average Word Length pr. genre')
+    plt.xlabel('Average Word Length')
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
@@ -112,7 +112,7 @@ def plot_word_class_pr_genre(df):
     # plotting nouns
     plotting_helper_method('nouns', 'genre', df)
     plt.title('Amount of nouns pr song pr. genre')
-    plt.xlabel('Nouns')
+    plt.xlabel("Percentage of nouns in each song")
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
@@ -120,7 +120,7 @@ def plot_word_class_pr_genre(df):
     # plotting verbs
     plotting_helper_method('verbs', 'genre', df)
     plt.title('Amount of verbs pr song pr. genre')
-    plt.xlabel('Verbs')
+    plt.xlabel('Percentage of verbs in each song')
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
@@ -128,7 +128,7 @@ def plot_word_class_pr_genre(df):
     # plotting adverbs
     plotting_helper_method('adverbs', 'genre', df)
     plt.title('Amount of adverbs pr song pr. genre')
-    plt.xlabel('Adverbs')
+    plt.xlabel('Percentage of adverbs in each song')
     plt.ylabel('Genre')
     plt.legend()
     plt.show()

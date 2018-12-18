@@ -129,7 +129,7 @@ def _clean_lyrics(lyrics):
             Returns None if empty string
             
     """
-    if  500 > len(lyrics) < 4000:
+    if  500 < len(lyrics) < 4000:
         lyrics = lyrics.replace(",","")
         lyrics = lyrics.replace(".","")
         lyrics = lyrics.replace(":","")
