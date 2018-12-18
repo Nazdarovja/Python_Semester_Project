@@ -33,12 +33,13 @@ def create_dataset():
 
         # Filter dataset
         filter_dataframe(lyrics_df) ## function not done
+
     else: 
         print('Skipping data filtering...')
     
     training_data_df = pd.read_pickle(TRAINING_DATA_PATH)
     test_data_df = pd.read_pickle(TEST_DATA_PATH)
-    
+
     return (training_data_df, test_data_df)
 
 def _create_paths():
