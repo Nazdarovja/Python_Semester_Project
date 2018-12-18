@@ -1,59 +1,42 @@
 import pandas as pd
-import collections
-import numpy as np
+import os
 
-def count_top_words_in_genre(genre, lyrics_df):
-    """
-    Detect the language of the text.
-    Parameters
-        ----------
-        genre : str
-            genre like 'Hip-Hop' or 'Pop'
-        lyrics_df : pandas dataframe
-            clean dataframe
-        Returns
-            return list of top words of genre
-    """
-    lyrics_df['most_used_words'] = pd.Series(collections.Counter(lyrics.split())
-                                    .most_common(10) for _, lyrics in lyrics_df['lyrics'].iteritems())
-    arr = np.array(lyrics_df[lyrics_df['genre'] == genre]['most_used_words'].tolist()) # merges row's most_used_word column to list
-    arr = arr[~pd.isna(arr)] # removing nans'
-    flat_list = [item for sublist in arr for item in sublist] # converts array of arrays to one big array
-    genre_dict = {}
-    for tupl in flat_list: 
-        genre_dict[tupl[0]] = genre_dict.get(tupl[0], 0) + tupl[1] # sums up total occurances of each word
-    top_words = collections.Counter(genre_dict)
-    return top_words.most_common(10)
+from src.features.util import normalize, create_pickle
+from src.features.word_count_analysis import sentence_avg_word_length,word_count
+from src.features.text_blob_analysis import analyze_sentiment, analyze_word_class
 
-def word_count(df, new_col_name, col_with_lyrics):
-    df = df.copy()
-    df[new_col_name] = df[col_with_lyrics].apply(lambda words: _count_words(words))
+def create_features(training_df, test_df, TRAINING_PKL = 'training_data', TEST_PKL = 'test_data'):
+    
+    training_path = os.path.isfile(os.path.join('data','processed',TRAINING_PKL))
+    test_path = os.path.isfile(os.path.join('data','processed',TEST_PKL))
+
+    if training_path and test_path:
+        print('Do you wish to override existing feature data ? y/n')
+        choice = input()
+        if choice == 'y':
+            # adding features as series to the dataframe
+            training_df = _add_features(training_df)
+            test_df = _add_features(test_df)
+
+            create_pickle(training_df,TRAINING_PKL)
+            create_pickle(test_df,TRAINING_PKL)
+    else:
+        training_df = _add_features(training_df)
+        test_df = _add_features(test_df)
+
+        create_pickle(training_df,TRAINING_PKL)
+        create_pickle(test_df,TRAINING_PKL)
+    
+    training_df = pd.read_pickle(os.path.join('data','processed',TRAINING_PKL))
+    test_df = pd.read_pickle(os.path.join('data','processed',TEST_PKL))
+
+    return (training_df, test_df)
+
+def _add_features(df):
+    df = sentence_avg_word_length(df,"avg_word_len", 'lyrics')
+    df = normalize(df, 'avg_word_len_nm', 'avg_word_len')
+    df = word_count(df,"word_count", 'lyrics')
+    df = normalize(df, 'word_count_nm', 'word_count')
+    df = analyze_sentiment(df)
+    df = analyze_word_class(df)
     return df
-
-def _count_words(words):
-    try:
-        return len(words.split())
-    except:
-        return 0 #TODO: better error handling, maybe not return 0
-
-def sentence_avg_word_length(df, new_col_name, col_with_lyrics):
-    df = df.copy()
-    df[new_col_name] = df[col_with_lyrics].apply(_sentence_avg_word_length)
-    return df
-
-def _sentence_avg_word_length(sentence):
-    res = sum(len(word.split()) for word in sentence) / len(sentence.split())**3
-    return res
-
-def normalize(df, new_col_name, col_to_norm):
-    '''
-    ref: https://en.wikipedia.org/wiki/Normalization_(statistics)
-    '''
-    df = df.copy()
-    max = df[col_to_norm].max()
-    min = df[col_to_norm].min()
-
-    df[new_col_name] = df[col_to_norm].apply(lambda val: (val-min)/(max-min))
-
-    return df
-
