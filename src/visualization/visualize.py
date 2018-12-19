@@ -1,14 +1,19 @@
 import matplotlib.pyplot as plt 
 import pandas as pd
+import os
 from textblob import TextBlob
 from src.features.build_features import normalize, word_count, sentence_avg_word_length
-from src.features.text_blob_analysis import analyze_sentiment, analyze_word_class
+from src.features.text_blob_analysis import analyze_sentiment, analyze_word_class_for_plotting
 
 def plotting(df):
-    # plot_genre_and_word_count(df)
-    # plot_genre_and_avg_word_len(df)
-    # plot_sentiment_analysis(df)
-    # plot_genre_and_normalized_word_count(df)
+    directory = 'src/visualization/feature_plots'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    plot_genre_and_word_count(df)
+    plot_genre_and_avg_word_len(df)
+    plot_sentiment_analysis(df)
+    plot_genre_and_normalized_word_count(df)
     plot_word_class_pr_genre(df)
 
 def plot_genre_and_word_count(df):
@@ -30,6 +35,7 @@ def plot_genre_and_word_count(df):
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
+    # plt.savefig('src/visualization/feature_plots/word_count_plot')
 
 def plot_genre_and_normalized_word_count(df):
     """
@@ -46,12 +52,12 @@ def plot_genre_and_normalized_word_count(df):
     df = normalize(df, 'normalized_word_count', 'word_count')
 
     plotting_helper_method('normalized_word_count', 'genre', df)
-
     plt.title('Normalized Word count pr. genre')
     plt.xlabel('Normalized Word Count')
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
+    # plt.savefig('src/visualization/feature_plots/normalized_word_count_plot')
     
 def plot_genre_and_avg_word_len(df):
     """
@@ -67,12 +73,14 @@ def plot_genre_and_avg_word_len(df):
     df = sentence_avg_word_length(df, 'avg_word_len', 'lyrics')
 
     plotting_helper_method('avg_word_len', 'genre', df)
+    plt.xlim(0, 0.002)
 
     plt.title('Average Word Length pr. genre')
     plt.xlabel('Average Word Length')
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
+    # plt.savefig('src/visualization/feature_plots/average_word_length')
 
 def plot_sentiment_analysis(df):
     """
@@ -94,6 +102,7 @@ def plot_sentiment_analysis(df):
     plt.ylabel('Subjectivity')
     plt.legend()
     plt.show()
+    # plt.savefig('src/visualization/feature_plots/sentiment_analysis_plot')
 
 def plot_word_class_pr_genre(df):
     """
@@ -106,8 +115,7 @@ def plot_word_class_pr_genre(df):
             Generates three graph with respectively nouns, verbs and adverbs on the x axis and then genre on the y axis
             with different colors representing each genre.
     """
-
-    df = analyze_word_class(df.sample(frac=1).reset_index(drop=True)[:1000])
+    df = analyze_word_class_for_plotting(df.sample(frac=1).reset_index(drop=True)[:1000])
 
     # plotting nouns
     plotting_helper_method('nouns', 'genre', df)
@@ -116,6 +124,7 @@ def plot_word_class_pr_genre(df):
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
+    # plt.savefig('src/visualization/feature_plots/nouns_pr_genre_plot')
 
     # plotting verbs
     plotting_helper_method('verbs', 'genre', df)
@@ -124,6 +133,7 @@ def plot_word_class_pr_genre(df):
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
+    # plt.savefig('src/visualization/feature_plots/verbs_pr_genre_plot')
 
     # plotting adverbs
     plotting_helper_method('adverbs', 'genre', df)
@@ -132,6 +142,7 @@ def plot_word_class_pr_genre(df):
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
+    # plt.savefig('src/visualization/feature_plots/adverbs_pr_genre_plot')
 
     # Circle diagram of each genre's average word classes distribution
     circle_diagram_helper_method(df)
@@ -172,4 +183,5 @@ def circle_diagram_helper_method(df):
         plt.tight_layout()
         plt.title(f'Circle diagram of the genre "{genre}"s average word classes distribution')
         plt.show()
+        # plt.savefig(f'src/visualization/feature_plots/{genre}_word_class_distribution')
 

@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+=======
+import pandas as pd
+import collections
+import numpy as np
+from src.data.make_dataset import create_dataset
+from src.features.build_features import sentence_avg_word_length, normalize, word_count
+from src.features.text_blob_analysis import analyze_sentiment, analyze_word_class
+from src.visualization.visualize import plotting
+#import src.neural_network as nn
+>>>>>>> 2f655a513bfdf2031eb3863bf7d3e4a2061c7a28
 import os
 
 from src.data.make_dataset import create_dataset
