@@ -11,72 +11,62 @@ from src.visualization.visualize import plotting
 if __name__ == "__main__":
     args = sys.argv[1:]
     
-    # Choose model
+
+
+    # Custom Neural Network
+
     print('''
-    Choose a model:
-        1 - Custom Neural Network
-        2 - Tensorflow Neural Network
-        3 - Naive Bayes Classifier 
+    Choose mode (Custom Neural Network):
+        1 - Train network
+        2 - Predict
     ''')
     inpt = int(input())
 
-    # Custom Neural Network
     if inpt == 1:
+        # Creating the dataset, unzip, 
+        training_data_df, test_data_df = create_dataset()
+        training_data_df, test_data_df = create_feature_pickles(training_data_df, test_data_df)
+        inputs_training = build_homemade_network_input_list(training_data_df)
+        inputs_test = build_homemade_network_input_list(test_data_df)
+        targets, genre_labels = create_labels(training_data_df)
+
+        network = {
+            'weights': train(inputs_training,targets, 10),
+            'genre_labels': genre_labels
+        }
         
-
+        count = 0
+        for i, t in zip(inputs_test, test_data_df['genre']):
+            test_res = predict(i, network['weights'])
+            # print(test_res)
+            maxnum = test_res.index(max(test_res))
+            # print(t)
+            if genre_labels[maxnum] == t:
+                count = count +1
+                print(f'{test_res} genre = {genre_labels[maxnum]}')
+        success_rate = (count/len(inputs_test))*100
+        print(f'Success Rate : {success_rate}% of {len(inputs_test)} lyrics')
+        print('\nname of trained weight file to save')
+        inpt = input()
+        pd.to_pickle(network, os.path.join('src','models','trained',f'{inpt}.pkl'))
+    elif inpt == 2:
         print('''
-        Choose mode:
-            1 - Train network
-            2 - Predict
+        specify filename of trained weights to use.
+        example: <FILENAME.pkl>
         ''')
-        inpt = int(input())
-
-        if inpt == 1:
-            # Creating the dataset, unzip, 
-            training_data_df, test_data_df = create_dataset()
-            training_data_df, test_data_df = create_feature_pickles(training_data_df, test_data_df)
-            inputs_training = build_homemade_network_input_list(training_data_df)
-            inputs_test = build_homemade_network_input_list(test_data_df)
-            targets, genre_labels = create_labels(training_data_df)
-
-            network = {
-                'weights': train(inputs_training,targets, 10),
-                'genre_labels': genre_labels
-            }
-            
-            count = 0
-            for i, t in zip(inputs_test, test_data_df['genre']):
-                test_res = predict(i, network['weights'])
-                # print(test_res)
-                maxnum = test_res.index(max(test_res))
-                # print(t)
-                if genre_labels[maxnum] == t:
-                    count = count +1
-                    print(f'{test_res} genre = {genre_labels[maxnum]}')
-            success_rate = (count/len(inputs_test))*100
-            print(f'Success Rate : {success_rate}% of {len(inputs_test)} lyrics')
-            print('\nname of trained weight file to save')
-            inpt = input()
-            pd.to_pickle(network, os.path.join('src','models','trained',f'{inpt}.pkl'))
-        elif inpt == 2:
-            print('''
-            specify filename of trained weights to use.
-            example: <FILENAME.pkl>
-            ''')
-            inpt = input()
-            network = pd.read_pickle(os.path.join('src','models','trained',inpt))
-            print('''
-            paste lyrics
-            ''')
-            lyrics = input()
-            
-            dic = {'lyrics': [lyrics]}
-            df = pd.DataFrame(dic)
-            features = predict_features(df)
-            print(features)
-            print(network['genre_labels'])
-            print(predict(features[0], network['weights']))
-
+        inpt = input()
+        network = pd.read_pickle(os.path.join('src','models','trained',inpt))
+        print('''
+        paste lyrics
+        ''')
+        lyrics = input()
+        
+        dic = {'lyrics': [lyrics]}
+        df = pd.DataFrame(dic)
+        features = predict_features(df)
+        print(features)
+        print(network['genre_labels'])
+        print(predict(features[0], network['weights']))
 
 
     # Plotting
