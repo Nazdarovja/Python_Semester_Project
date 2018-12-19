@@ -55,9 +55,6 @@ We have used a rather ad-hoc strategy to identify features from lyrics to use in
 - Adverbs
 - Verbs
 
-### [MORE?] Improvements, further development ideas
-We use a mixture of handmade functions and premade libraries, and as the focus of this project was the construction of the neural networks itself, the precise results from these feature functions have only been checked superficially.
-
 ### Feature Visualization
 
 Song Word Count by Genre:
