@@ -25,7 +25,6 @@ def plot_genre_and_word_count(df):
             Generates a graph with word count on the x axis and genre on the y axis
             with different colors representing each genre.
     """
-    # df = word_count(df, 'word_count', 'lyrics')
     plotting_helper_method('word_count', 'genre', df)
 
     plt.title('Word count pr. genre')
@@ -46,9 +45,6 @@ def plot_genre_and_normalized_word_count(df):
             Generates a graph with normalized word count on the x axis and genre on the y axis
             with different colors representing each genre.
     """
-    # df = word_count(df, 'word_count', 'lyrics')
-    # df = normalize(df, 'normalized_word_count', 'word_count')
-
     plotting_helper_method('word_count_nm', 'genre', df)
     plt.title('Normalized Word count pr. genre')
     plt.xlabel('Normalized Word Count')
@@ -68,8 +64,6 @@ def plot_genre_and_avg_word_len(df):
             Generates a graph with average word length on the x axis and genre on the y axis
             with different colors representing each genre.
     """
-    # df = sentence_avg_word_length(df, 'avg_word_len', 'lyrics')
-
     plotting_helper_method('avg_word_len_nm', 'genre', df)
     plt.xlim(0, 0.02)
 
@@ -91,8 +85,6 @@ def plot_sentiment_analysis(df):
             Generates a graph with polarity on the x axis and subjectivity on the y axis
             with different colors representing each genre.
     """
-    # df = analyze_sentiment(df) # returns a series which is set on a new column of the dataframe
-
     plotting_helper_method('polarity', 'subjectivity', df)
 
     plt.title('Sentiment Analysis pr. genre')
@@ -113,8 +105,6 @@ def plot_word_class_pr_genre(df):
             Generates three graph with respectively nouns, verbs and adverbs on the x axis and then genre on the y axis
             with different colors representing each genre.
     """
-    # df = analyze_word_class_for_plotting(df.sample(frac=1).reset_index(drop=True)[:1000])
-
     # plotting nouns
     plotting_helper_method('nouns', 'genre', df)
     plt.title('Percentage of nouns pr song pr. genre')
