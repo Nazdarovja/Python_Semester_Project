@@ -8,9 +8,9 @@ def plotting(df):
         os.makedirs(directory)
 
     plot_genre_and_word_count(df)
+    plot_genre_and_normalized_word_count(df)
     plot_genre_and_avg_word_len(df)
     plot_sentiment_analysis(df)
-    plot_genre_and_normalized_word_count(df)
     plot_word_class_pr_genre(df)
     plot_pie_charts_of_word_class_distribution(df)
 
