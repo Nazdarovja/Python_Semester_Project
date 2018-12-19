@@ -1,42 +1,66 @@
-# Python_Semester_Project
+# Song Genre Classification by Lyrics using Neural Network
+A Neural Network / Machine Learning implementation to classify song lyrics by genre
 
-# Dependency requirements
+## Prerequisites / Dependency requirements
+````
 - Anacondas Python distribution
-- `$pip install langdetect` - Google language detection lib
-- `$pip install nltk` - Natural language toolkit lib
+- langdetect - Google language detection lib
+- nltk - Natural language toolkit lib
+- Tensorflow - Machine Learning Framework
+- textblob - Natural Language Processing
+````
 
-## Project Idea:
+## [MISSING] How to Run
+````
+stuff here
+````
+## About this project - "Handmade" Neural Network
+ 
+### Project Idea
+Our initial idea was to investigate, if we could build a Neural Network / Machine Learning Tool, to classify song lyrics by genre, by identifying certain characteristics about the song lyrics (features), and use these features to train our network. 
 
-- Machine Learning with lyrics from [kaggle.com or other] to identify a songs genre by its lyrics; Input a song and get an estimation of its genre. 
-- Supervised learning -> we give the "Machine" a song's lyrics which we know the genre of.
-- (extra?) Perhaps train it to identify the artist by a songs lyrics - if possible, might be too difficult?
+### Project Description and Artifacts
+#### Dataset
+To be able to check the identified genres form our neural network, we needed a dataset of song lyrics, with an already noted genre. Therefore, we chose to obtain a dataset of song info from kaggle.com that included just that. 
 
-### NOTES
-- n-grams i bog "datascience from scraps/scratch"
-- -> generere en popsang ud fra en masse lyrics.
+The dataset is ~100mb in size (zipped), and contains ~380,000 songs, with the information:
+- song (name)
+- year
+- artist
+- genre
+- lyrics
 
+View of the dataset struture from kaggle.com:
+![dataset from kaggle](/readme_images/dataset.png)
 
-## Brainstorm - 30-11-2018
-Our initial idea is to obtain a dataset of lyrics from kaggle.com (if possible), ideally genres. 
+##### Filtering of the dataset
+The datset is filtered before being used in our neural network. 
 
-Thereby, it would be possible to do analysis on the lyrics BY GENRE, and thereby obtain knowledge on, ex: 
+- Language: We only focus on songs with English lyrics, by using a language detection library.  
+- Genres: We have (arbitrarily, by the 3 largest genres) selected the following 3 genres to use:
+    - Rock
+    - Pop
+    - Hip Hop  
+- Length: We focus on songs with lyrics that are longer than 500 and less than 15,000 in characters. 
+- Segment: We use 4000 random songs from each genre to train our model with (randomized), and 250 random other songs from each genre to test our model with afterwards.
 
-- top X most used words / wordcloud
-- sentiment analysis 
-- length?
+#### Features
+We have used a rather ad-hoc strategy to identify features from lyrics to use in our neural network, by trial and error, by intuition and by freestyling feature ideas. The networks ability to correctly classify the songs genre is directly correlated to this, and it might not be best feautes to use - we simply chose to use these:
 
-The idea is to get data to differentiate characteristic for each genre, and thereby get data for supervised learning of our neural network.
+- Word count (normalized)
+- Average word length (normalized)
+- Polarity
+- Subjectivity
+- Nouns
+- Adverbs
+- Verbs
 
-The goal is to be able to feed the network lyrics from an "unknown" song, and have the network classify the song as a certain genre (by a percentage score).
+### Improvements, further development ideas
+We use a mixture of handmade functions and premade libraries, and as the focus of this project was the construction of the neural networks itself, the precise results from these feature functions have only been checked superficially.
 
-
-### ideas / sources
-https://tmthyjames.github.io/2018/february/Predicting-Musical-Genres/
-
-https://www.kaggle.com/corizzi/lyrics-genre-analysis-machine-learning
-
-https://pypi.org/project/langdetect/
-
+### Literature, Sources
+ - "Data Science from Scratch: First Principles with Python", Chapter 18: Neural Networks, by. Joel Grus
+-  Lecture Notes: "24. Neural Networks", by Rolf-Helge Pfeiffer
 
 ## Authors
 
@@ -44,11 +68,3 @@ https://pypi.org/project/langdetect/
 * **Mathias Bigler** - *developer* - [Zurina](https://github.com/Zurina)
 * **Mikkel Emil Larsen** - *developer* - [mikkel7emil](https://github.com/mikkel7emil)
 * **Stanislav Novitski** - *developer* - [Stani2980](https://github.com/Stani2980)
-  
-
-
-### Initial To Do
-- Identify X genres to focus on, and how many songs/lyrics to use from each
-- Massage data: remove non english songs, cleanup date etc.
-- Write logic to identify top X most used words (per genre)
-- 
