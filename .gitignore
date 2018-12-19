@@ -4,8 +4,10 @@
 
 
 # Data files
+!custom_weights.pkl
 *.csv
 *.pkl
+
 
 ### macOS ###
 # General

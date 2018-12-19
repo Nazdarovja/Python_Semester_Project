@@ -10,10 +10,13 @@ A Neural Network / Machine Learning implementation to classify song lyrics by ge
 - textblob - Natural Language Processing
 ````
 
-## [MISSING] How to Run
+## How to Run
+From your terminal of choice:
 ````
-stuff here
+python main.py
+- follow the menu instructions
 ````
+
 ## About this project - "Handmade" Neural Network
  
 ### Project Idea
