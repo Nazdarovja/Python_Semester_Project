@@ -23,7 +23,7 @@ def create_feature_pickles(training_df, test_df, TRAINING_PKL = 'training_data.p
     else:
         training_df = _add_features(training_df)
         test_df = _add_features(test_df)
-
+        
         create_pickle(training_df,TRAINING_PKL)
         create_pickle(test_df,TEST_PKL)
     
@@ -51,7 +51,7 @@ def create_labels(df):
     genre_labels = series.keys() # getting genre labels
     targets = [[1 if i == j else 0 for i in genre_labels] for j in df['genre']]
 
-    return targets
+    return (targets, genre_labels)
 
 def _add_features(df):
     df = sentence_avg_word_length(df,"avg_word_len", 'lyrics')

@@ -40,6 +40,10 @@ def create_dataset():
     training_data_df = pd.read_pickle(TRAINING_DATA_PATH)
     test_data_df = pd.read_pickle(TEST_DATA_PATH)
 
+    ## Shuffle datasets
+    training_data_df = training_data_df.sample(frac=1).reset_index(drop=True)
+    test_data_df = test_data_df.sample(frac=1).reset_index(drop=True)
+
     return (training_data_df, test_data_df)
 
 def _create_paths():

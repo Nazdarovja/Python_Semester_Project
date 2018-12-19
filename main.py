@@ -13,11 +13,18 @@ if __name__ == "__main__":
     training_data_df, test_data_df = create_feature_pickles(training_data_df, test_data_df)
     inputs_training = build_homemade_network_input_list(training_data_df)
     inputs_test = build_homemade_network_input_list(test_data_df)
-    targets = create_labels(test_data_df)
+    targets, genre_labels = create_labels(training_data_df)
 
-    network = train(inputs_training, targets, 500)
+    print(inputs_training[10:20])
+    network = train(inputs_training, targets, 100)
 
-    for i in inputs_test[:50]:
-    # res = predict([0.71148825065274152, 0.22561965811965812, 0.129914529914531, 0.2506896551724138, 0.0513455968010067,1,1], network)
-        res = predict(i, network)
-        print(res)
+    count = 0
+    for i, t in zip(inputs_test, test_data_df['genre']):
+        test_res = predict(i, network)
+        # print(test_res)
+        maxnum = test_res.index(max(test_res))
+        # print(t)
+        if genre_labels[maxnum] == t:
+            count = count +1
+            print(f'{test_res} genre = {genre_labels[maxnum]}')
+    print(count)
