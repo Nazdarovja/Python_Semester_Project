@@ -75,8 +75,8 @@ def plot_genre_and_avg_word_len(df):
     plotting_helper_method('avg_word_len', 'genre', df)
     plt.xlim(0, 0.002)
 
-    plt.title('Average Word Length pr. genre')
-    plt.xlabel('Average Word Length')
+    plt.title('Normalized Average Word Length pr. genre')
+    plt.xlabel('Normalized Average Word Length')
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
