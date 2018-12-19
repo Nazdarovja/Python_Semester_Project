@@ -47,5 +47,5 @@ def _count_word_class(words, word_class):
     count = 0
     for w in words:
         if w[1] == word_class:
-            count = count +1
+            count = count + 1
     return count / 100

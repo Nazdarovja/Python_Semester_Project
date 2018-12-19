@@ -2,9 +2,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import os
 from textblob import TextBlob
-from src.features.util import normalize
-from src.features.word_count_analysis import word_count, sentence_avg_word_length
-from src.features.text_blob_analysis import analyze_sentiment, analyze_word_class_for_plotting
 
 def plotting(df):
     directory = 'src/visualization/feature_plots'
@@ -28,7 +25,7 @@ def plot_genre_and_word_count(df):
             Generates a graph with word count on the x axis and genre on the y axis
             with different colors representing each genre.
     """
-    df = word_count(df, 'word_count', 'lyrics')
+    # df = word_count(df, 'word_count', 'lyrics')
     plotting_helper_method('word_count', 'genre', df)
 
     plt.title('Word count pr. genre')
@@ -49,10 +46,10 @@ def plot_genre_and_normalized_word_count(df):
             Generates a graph with normalized word count on the x axis and genre on the y axis
             with different colors representing each genre.
     """
-    df = word_count(df, 'word_count', 'lyrics')
-    df = normalize(df, 'normalized_word_count', 'word_count')
+    # df = word_count(df, 'word_count', 'lyrics')
+    # df = normalize(df, 'normalized_word_count', 'word_count')
 
-    plotting_helper_method('normalized_word_count', 'genre', df)
+    plotting_helper_method('word_count_nm', 'genre', df)
     plt.title('Normalized Word count pr. genre')
     plt.xlabel('Normalized Word Count')
     plt.ylabel('Genre')
@@ -71,10 +68,10 @@ def plot_genre_and_avg_word_len(df):
             Generates a graph with average word length on the x axis and genre on the y axis
             with different colors representing each genre.
     """
-    df = sentence_avg_word_length(df, 'avg_word_len', 'lyrics')
+    # df = sentence_avg_word_length(df, 'avg_word_len', 'lyrics')
 
-    plotting_helper_method('avg_word_len', 'genre', df)
-    plt.xlim(0, 0.002)
+    plotting_helper_method('avg_word_len_nm', 'genre', df)
+    plt.xlim(0, 0.02)
 
     plt.title('Normalized Average Word Length pr. genre')
     plt.xlabel('Normalized Average Word Length')
@@ -94,7 +91,7 @@ def plot_sentiment_analysis(df):
             Generates a graph with polarity on the x axis and subjectivity on the y axis
             with different colors representing each genre.
     """
-    df = analyze_sentiment(df) # returns a series which is set on a new column of the dataframe
+    # df = analyze_sentiment(df) # returns a series which is set on a new column of the dataframe
 
     plotting_helper_method('polarity', 'subjectivity', df)
 
@@ -116,7 +113,7 @@ def plot_word_class_pr_genre(df):
             Generates three graph with respectively nouns, verbs and adverbs on the x axis and then genre on the y axis
             with different colors representing each genre.
     """
-    df = analyze_word_class_for_plotting(df.sample(frac=1).reset_index(drop=True)[:1000])
+    # df = analyze_word_class_for_plotting(df.sample(frac=1).reset_index(drop=True)[:1000])
 
     # plotting nouns
     plotting_helper_method('nouns', 'genre', df)
@@ -172,9 +169,14 @@ def circle_diagram_helper_method(df):
         avg_percentage_verbs = filtered_df['verbs'].mean()
         avg_percentage_adverbs = filtered_df['adverbs'].mean()
 
+        total = avg_percentage_nouns + avg_percentage_nouns + avg_percentage_nouns
+        nouns = avg_percentage_nouns / total * 100
+        verbs = avg_percentage_verbs / total * 100
+        adverbs = avg_percentage_adverbs / total * 100
+
         # Pie chart
         labels = ['Nouns', 'Verbs', 'Adverbs']
-        sizes = [avg_percentage_nouns, avg_percentage_verbs, avg_percentage_adverbs]
+        sizes = [nouns, verbs, adverbs]
 
         _, ax1 = plt.subplots()
         ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
