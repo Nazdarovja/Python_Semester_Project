@@ -30,14 +30,6 @@ To run this notebook, navigate to the subfolder, and from your terminal of choic
 jupyter notebook neural_network.ipynb
 ````
 
-### Testing the Handmade Neural Network findings - 2
-In a further attempt to verify and compare our networks findings, and to gain more experience with Machine Learning Tools, we have implemented a [Naive Bayes Classifier](https://da.wikipedia.org/wiki/Naiv_Bayes_klassifikator). It is located in a Jupyter Notebook, in the "naive_bayes" subfolder.
-
-To run this notebook, navigate to the subfolder, and from your terminal of choice:
-````
-jupyter notebook genre_classifier.ipynb
-````
-
 ### Project Description and Artifacts
 #### Dataset
 To be able to check the identified genres form our neural network, we needed a dataset of song lyrics, with an already noted genre. Therefore, we chose to obtain a dataset of song info from kaggle.com that included just that. 
