@@ -40,7 +40,7 @@ if __name__ == "__main__":
             targets, genre_labels = create_labels(training_data_df)
 
             network = {
-                'weights': train(inputs_training,targets, 10),
+                'weights': train(inputs_training,targets, 2000),
                 'genre_labels': genre_labels
             }
             
