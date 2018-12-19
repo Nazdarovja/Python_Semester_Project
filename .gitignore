@@ -4,9 +4,9 @@
 
 
 # Data files
-!\trained\custom_weights.pkl
 *.csv
-*.pkl
+test_data.pkl
+training_data.pkl
 
 
 ### macOS ###
