@@ -24,7 +24,7 @@ def create_dataset():
     TRAINING_DATA_PATH = os.path.join('data','interim','training_data.pkl')
     TEST_DATA_PATH = os.path.join('data','interim','test_data.pkl')
     
-    if (not os.path.isfile(TRAINING_DATA_PATH)) and (not os.path.isfile(TEST_DATA_PATH)):
+    if not os.path.isfile(TRAINING_DATA_PATH) and not os.path.isfile(TEST_DATA_PATH):
         print('Filtering data...')
         
         # Get and create dataframe
@@ -32,7 +32,7 @@ def create_dataset():
         lyrics_df = get_dataframe_from_path(EXTERNAL_PATH)
 
         # Filter dataset
-        filter_dataframe(lyrics_df) ## function not done
+        filter_dataframe(lyrics_df)
 
     else: 
         print('Skipping data filtering...')
@@ -47,8 +47,8 @@ def create_dataset():
     return (training_data_df, test_data_df)
 
 def _create_paths():
-    print('Creating missing paths...')
     if not os.path.isdir('data/external'):
+        print('Creating missing paths...')
         os.mkdir('data/external')
     
     if not os.path.isdir('data/interim'):

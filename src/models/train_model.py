@@ -60,8 +60,8 @@ def train(inputs, targets, training_iterations=1000):
     ###########
     random.seed(0) # to get repeatable results
     input_size = 7 # antal af input noder (samme antal som feautures)
-    num_hidden = 4 # antal af hidden noder
-    output_size = 3 # antal af output noder (i vores tilfælde, genres)
+    num_hidden = 5 # antal af hidden noder
+    output_size = 7 # antal af output noder (i vores tilfælde, genres)
 
 
     # each hidden neuron has one weight per input, plus a bias weight

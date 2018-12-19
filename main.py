@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
 
         network = {
-            'weights': train(inputs_training,targets, 2000),
+            'weights': train(inputs_training,targets, 1000),
             'genre_labels': genre_labels
         }
         
@@ -56,7 +56,7 @@ if __name__ == "__main__":
         
         pd.to_pickle(network, os.path.join('src','models','trained',f'{inpt}.pkl'))
         print('*********************************************************************************************\n')
-        print('*        Please run again and choose 2 for predict and use your trained network             *')
+        print('*        Please run again and choose 2 for predict and use your trained network             *\n')
         print('*********************************************************************************************\n')
 
     elif inpt == 2:
@@ -70,21 +70,23 @@ if __name__ == "__main__":
         inpt = input()
     
         network = pd.read_pickle(os.path.join('src','models','trained',inpt))
-    
-        print('*********************************************************************************************')
-        print('''
-        Paste lyrics to predict (one line of lyrics multiple lines are not supported)
-        Press Enter/Return after for result
-        ''')
-        lyrics = input()
-        
-        dic = {'lyrics': [lyrics]}
-        df = pd.DataFrame(dic)
-        features = predict_features(df)
-        
-        labels = network['genre_labels']
-        res = predict(features[0], network['weights'])
-        
-        print('\n\n\n*********************************************************************************************\n')
-        print(f' {labels[0]}= {res[0]} \n {labels[1]}= {res[1]} \n {labels[2]}= {res[2]}')
-        print('\n*********************************************************************************************')
+        while True:
+            print('*********************************************************************************************')
+            print('''
+            Paste lyrics to predict (one line of lyrics multiple lines are not supported)
+            Press Enter/Return after for result
+            ''')
+            lyrics = input()
+            
+            dic = {'lyrics': [lyrics]}
+            df = pd.DataFrame(dic)
+            features = predict_features(df)
+            
+            labels = network['genre_labels']
+            res = predict(features[0], network['weights'])
+            for_print = [f'{l} = {r}' for l, r in zip(labels, res) ]
+            
+            print('\n\n\n*********************************************************************************************\n')
+            print('\n'.join(for_print))
+            print(f'\nThis is most likely a {labels[res.index(max(res))]} song')
+            print('\n*********************************************************************************************')

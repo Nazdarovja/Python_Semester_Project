@@ -69,7 +69,9 @@ def filter_dataframe(lyrics_df, no_of_songs = 5000, list_of_genres= ['Pop', 'Hip
             Dataframe with requested objects.
     """
     lyrics_df = lyrics_df.sample(frac=1).reset_index(drop=True)
-    
+    l = lyrics_df['genre'].groupby(lyrics_df['genre']).count()
+    print(l)
+
     filtered_df = pd.DataFrame() # empty df for data
     tqdm.pandas(desc="Processing data...") # setup tqdm
     
@@ -83,15 +85,18 @@ def filter_dataframe(lyrics_df, no_of_songs = 5000, list_of_genres= ['Pop', 'Hip
     filtered_df = _parallelize_language_detection(filtered_df)
     
     # DEBUG FOR TESTING
-    # genres = filtered_df['genre'].groupby(filtered_df['genre']).count() # groups the dataset by genre and counts the amount of each genre
-    # print(genres)
+    genres = filtered_df['genre'].groupby(filtered_df['genre']).count() # groups the dataset by genre and counts the amount of each genre
+    print(genres)
 
     traning_data_df = pd.DataFrame()
     test_data_df = pd.DataFrame()
 
+    # Song list reduced so test sample can be extracted
+    no_of_songs = no_of_songs - 1000
+
     for genre in list_of_genres:
-        traning_data_df = traning_data_df.append(filtered_df[filtered_df['genre'] == genre][:4000])
-        test_data_df= test_data_df.append(filtered_df[filtered_df['genre'] == genre][4000:4250])
+        traning_data_df = traning_data_df.append(filtered_df[filtered_df['genre'] == genre][:no_of_songs])
+        test_data_df= test_data_df.append(filtered_df[filtered_df['genre'] == genre][no_of_songs:no_of_songs + 250])
     
     traning_data_df.reset_index(drop=True)
     test_data_df.reset_index(drop=True)
