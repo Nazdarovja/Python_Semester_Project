@@ -32,12 +32,24 @@ if __name__ == "__main__":
         inpt = int(input())
 
         if inpt == 1:
+
             # Creating the dataset, unzip, 
             training_data_df, test_data_df = create_dataset()
             training_data_df, test_data_df = create_feature_pickles(training_data_df, test_data_df)
             inputs_training = build_homemade_network_input_list(training_data_df)
             inputs_test = build_homemade_network_input_list(test_data_df)
             targets, genre_labels = create_labels(training_data_df)
+
+            print('''
+            Do you want plots of features?:
+                1 - yes
+                2 - no
+            ''')
+            plt = int(input())
+
+            if plt == 1:
+                plotting(training_data_df)
+                
 
             network = {
                 'weights': train(inputs_training,targets, 10),
@@ -55,7 +67,7 @@ if __name__ == "__main__":
                     print(f'{test_res} genre = {genre_labels[maxnum]}')
             success_rate = (count/len(inputs_test))*100
             print(f'Success Rate : {success_rate}% of {len(inputs_test)} lyrics')
-            print('\nname of trained weight file to save')
+            print('\nname your weight file to save it')
             inpt = input()
             pd.to_pickle(network, os.path.join('src','models','trained',f'{inpt}.pkl'))
         elif inpt == 2:
@@ -76,8 +88,3 @@ if __name__ == "__main__":
             print(features)
             print(network['genre_labels'])
             print(predict(features[0], network['weights']))
-
-
-
-    # Plotting
-    #plotting(training_data_df)
