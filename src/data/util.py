@@ -68,6 +68,7 @@ def filter_dataframe(lyrics_df, no_of_songs = 5000, list_of_genres= ['Pop', 'Hip
         pandas.DataFrame
             Dataframe with requested objects.
     """
+    lyrics_df = lyrics_df.sample(frac=1).reset_index(drop=True)
     
     filtered_df = pd.DataFrame() # empty df for data
     tqdm.pandas(desc="Processing data...") # setup tqdm
