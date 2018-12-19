@@ -5,7 +5,9 @@
 
 # Data files
 *.csv
-*.pkl
+test_data.pkl
+training_data.pkl
+
 
 ### macOS ###
 # General
