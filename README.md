@@ -22,6 +22,22 @@ python main.py
 ### Project Idea
 Our initial idea was to investigate, if we could build a Neural Network / Machine Learning Tool, to classify song lyrics by genre, by identifying certain characteristics about the song lyrics (features), and use these features to train our network. 
 
+### Testing the Handmade Neural Network findings - 1
+In an attempt to verify and compare our networks findings, and to gain some experience with more established Machine Learning Tools, we have implemented an existing Machine Learning Framework, Tensorflow. It is located in a Jupyter Notebook, in the "tensorflow" subfolder.
+
+To run this notebook, navigate to the subfolder, and from your terminal of choice:
+````
+jupyter notebook neural_network.ipynb
+````
+
+### Testing the Handmade Neural Network findings - 2
+In a further attempt to verify and compare our networks findings, and to gain more experience with Machine Learning Tools, we have implemented a [Naive Bayes Classifier](https://da.wikipedia.org/wiki/Naiv_Bayes_klassifikator). It is located in a Jupyter Notebook, in the "naive_bayes" subfolder.
+
+To run this notebook, navigate to the subfolder, and from your terminal of choice:
+````
+jupyter notebook genre_classifier.ipynb
+````
+
 ### Project Description and Artifacts
 #### Dataset
 To be able to check the identified genres form our neural network, we needed a dataset of song lyrics, with an already noted genre. Therefore, we chose to obtain a dataset of song info from kaggle.com that included just that. 
