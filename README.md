@@ -1,5 +1,5 @@
 # Song Genre Classification by Lyrics using Neural Network
-A Neural Network / Machine Learning implementation to classify song lyrics by genre
+A Neural Network / Machine Learning implementation to classify genre by song lyrics.
 
 ## Prerequisites / Dependency requirements
 ````
