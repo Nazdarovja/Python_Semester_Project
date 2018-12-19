@@ -26,19 +26,45 @@ def count_top_words_in_genre(genre, lyrics_df):
     return top_words.most_common(10)
 
 def word_count(df, new_col_name, col_with_lyrics):
+    """
+    Count the number of words in a dataframe lyrics column, given a column name, process it, and save as new_col_name
+    Parameters
+        ----------
+        df : dataframe
+        new_col_name : name of new column
+        col_with_lyric: column with lyrics
+        Returns
+            return dataframe with new column
+    """
     df[new_col_name] = df[col_with_lyrics].apply(lambda words: _count_words(words))
     return df
 
 def _count_words(words):
+    """
+    helper method for word_count() method, return length of given words
+    """
     try:
         return len(words.split())
     except:
         return 0 #TODO: better error handling, maybe not return 0
 
 def sentence_avg_word_length(df, new_col_name, col_with_lyrics):
+    """
+    Count the average word length in a dataframe lyrics column, given a column name, process it, and save as new_col_name
+    Parameters
+        ----------
+        df : dataframe
+        new_col_name : name of new column
+        col_with_lyric: column with lyrics
+        Returns
+            return dataframe with new column
+    """
     df[new_col_name] = df[col_with_lyrics].apply(_sentence_avg_word_length)
     return df
 
 def _sentence_avg_word_length(sentence):
+    """
+    helper method for sentence_avg_word_length() method, sum of len of words in sentence, divided by length of sentence ***3 (factorize)
+    """
     res = sum(len(word.split()) for word in sentence) / len(sentence.split())**3
     return res
