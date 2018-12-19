@@ -2,7 +2,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import os
 from textblob import TextBlob
-from src.features.build_features import normalize, word_count, sentence_avg_word_length
+from src.features.util import normalize
+from src.features.word_count_analysis import word_count, sentence_avg_word_length
 from src.features.text_blob_analysis import analyze_sentiment, analyze_word_class_for_plotting
 
 def plotting(df):
@@ -75,8 +76,8 @@ def plot_genre_and_avg_word_len(df):
     plotting_helper_method('avg_word_len', 'genre', df)
     plt.xlim(0, 0.002)
 
-    plt.title('Average Word Length pr. genre')
-    plt.xlabel('Average Word Length')
+    plt.title('Normalized Average Word Length pr. genre')
+    plt.xlabel('Normalized Average Word Length')
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
