@@ -16,7 +16,7 @@ if __name__ == "__main__":
     targets, genre_labels = create_labels(training_data_df)
 
     print(inputs_training[10:20])
-    network = train(inputs_training, targets, 100)
+    network = train(inputs_training, targets, 10)
 
     count = 0
     for i, t in zip(inputs_test, test_data_df['genre']):
@@ -27,4 +27,5 @@ if __name__ == "__main__":
         if genre_labels[maxnum] == t:
             count = count +1
             print(f'{test_res} genre = {genre_labels[maxnum]}')
-    print(count)
+    success_rate = (count/len(inputs_test))*100
+    print(f'Success Rate : {success_rate}% of {len(inputs_test)} lyrics')
