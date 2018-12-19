@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt 
 import pandas as pd
 import os
-from textblob import TextBlob
 
 def plotting(df):
     directory = 'src/visualization/feature_plots'
@@ -13,6 +12,7 @@ def plotting(df):
     plot_sentiment_analysis(df)
     plot_genre_and_normalized_word_count(df)
     plot_word_class_pr_genre(df)
+    plot_pie_charts_of_word_class_distribution(df)
 
 def plot_genre_and_word_count(df):
     """
@@ -65,7 +65,7 @@ def plot_genre_and_avg_word_len(df):
             with different colors representing each genre.
     """
     plotting_helper_method('avg_word_len_nm', 'genre', df)
-    plt.xlim(0, 0.02)
+    plt.xlim(0, 1)
 
     plt.title('Normalized Average Word Length pr. genre')
     plt.xlabel('Normalized Average Word Length')
@@ -96,7 +96,7 @@ def plot_sentiment_analysis(df):
 
 def plot_word_class_pr_genre(df):
     """
-    plots sentiment analysis.
+    plots amount of word class pr genre.
     Parameters
         ----------
         df : Dataframe
@@ -105,10 +105,13 @@ def plot_word_class_pr_genre(df):
             Generates three graph with respectively nouns, verbs and adverbs on the x axis and then genre on the y axis
             with different colors representing each genre.
     """
+    df['nouns'] = df['nouns'] * 100
+    df['verbs'] = df['verbs'] * 100
+    df['adverbs'] = df['adverbs'] * 100
     # plotting nouns
     plotting_helper_method('nouns', 'genre', df)
-    plt.title('Percentage of nouns pr song pr. genre')
-    plt.xlabel("Percentage of nouns in each song")
+    plt.title('Amount of nouns pr song pr. genre')
+    plt.xlabel("Amount of nouns in each song")
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
@@ -116,8 +119,8 @@ def plot_word_class_pr_genre(df):
 
     # plotting verbs
     plotting_helper_method('verbs', 'genre', df)
-    plt.title('Percentage of verbs pr song pr. genre')
-    plt.xlabel('Percentage of verbs in each song')
+    plt.title('Amount of verbs pr song pr. genre')
+    plt.xlabel('Amount of verbs in each song')
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
@@ -125,17 +128,17 @@ def plot_word_class_pr_genre(df):
 
     # plotting adverbs
     plotting_helper_method('adverbs', 'genre', df)
-    plt.title('Percentage of adverbs pr song pr. genre')
-    plt.xlabel('Percentage of adverbs in each song')
+    plt.title('Amount of adverbs pr song pr. genre')
+    plt.xlabel('Amount of adverbs in each song')
     plt.ylabel('Genre')
     plt.legend()
     plt.show()
     # plt.savefig('src/visualization/feature_plots/adverbs_pr_genre_plot')
 
-    # Circle diagram of each genre's average word classes distribution
-    circle_diagram_helper_method(df)
-
 def plotting_helper_method(x_axis, y_axis, df):
+    """
+    Helper method to scatter plots running through each genre
+    """
     genre_dict = {
         'g':'Rock',
         'b':'Hip-Hop',
@@ -145,7 +148,16 @@ def plotting_helper_method(x_axis, y_axis, df):
         filtered_df = df[df['genre'] == genre]
         plt.scatter(filtered_df[x_axis], filtered_df[y_axis], c=color, label=genre)
 
-def circle_diagram_helper_method(df):
+def plot_pie_charts_of_word_class_distribution(df):
+    """
+    Circle diagrams of each genre's average word classes distribution.
+    Parameters
+        ----------
+        df : Dataframe
+            Pandas Dataframe with our filtered songs
+        Returns
+            Generates three circle diagrams of each genre's average word classes distribution
+    """
     genre_dict = {
         'g':'Rock',
         'b':'Hip-Hop',
