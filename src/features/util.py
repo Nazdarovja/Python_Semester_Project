@@ -5,9 +5,14 @@ def normalize(df, new_col_name, col_to_norm):
     '''
     ref: https://en.wikipedia.org/wiki/Normalization_(statistics)
     '''
-    max = df[col_to_norm].max()
-    min = df[col_to_norm].min()
+    if (col_to_norm == 'word_count'):
+        max = 1718
+        min = 74
+    elif (col_to_norm == 'avg_word_len'):
+        max = 0.0010981580557913647
+        min = 1.431355415135597e-06
 
+    
     df[new_col_name] = df[col_to_norm].apply(lambda val: (val-min)/(max-min))
 
     return df

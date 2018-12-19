@@ -5,6 +5,10 @@ from src.features.util import normalize, create_pickle
 from src.features.word_count_analysis import sentence_avg_word_length,word_count
 from src.features.text_blob_analysis import analyze_sentiment, analyze_word_class
 
+def predict_features(df):
+    df = _add_features(df)
+    return build_homemade_network_input_list(df)
+
 def create_feature_pickles(training_df, test_df, TRAINING_PKL = 'training_data.pkl', TEST_PKL = 'test_data.pkl'):
     
     training_path = os.path.join('data','processed',TRAINING_PKL)
