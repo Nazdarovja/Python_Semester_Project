@@ -55,8 +55,66 @@ We have used a rather ad-hoc strategy to identify features from lyrics to use in
 - Adverbs
 - Verbs
 
-### Improvements, further development ideas
-We use a mixture of handmade functions and premade libraries, and as the focus of this project was the construction of the neural networks itself, the precise results from these feature functions have only been checked superficially.
+### Feature Visualization
+
+Song Word Count by Genre:
+
+![1](/readme_images/graphs/word_count_pr_genre.png)
+
+---
+
+Song Word Count by Genre (normalized):
+
+![2](/readme_images/graphs/nm_word_count_pr_genre.png)
+
+---
+
+Average Word length (normalized):
+
+![3](/readme_images/graphs/nm_avg_word_len_1.png)
+
+---
+
+Sentiment Analysis by genre:
+
+![4](/readme_images/graphs/sentiment_analysis.png)
+
+---
+
+Amount of Nouns by genre:
+
+![5](/readme_images/graphs/amount_of_nouns_pr_genre.png)
+
+Amount of Verbs by genre:
+
+---
+
+![6](/readme_images/graphs/amount_of_verbs_pr_genre.png)
+
+---
+
+Amount of Adverbs by genre:
+
+![7](/readme_images/graphs/amount_of_adverbs_pr_genrepng.png)
+
+---
+
+Pie Chart of Genre Rocks average word class distribution:
+
+![8](/readme_images/graphs/circle_diagram_rock_wordclass_distribution.png)
+
+---
+
+Pie Chart of Genre Hip-Hops average word class distribution:
+
+![9](/readme_images/graphs/circle_diagram_hiphop_wordclass_distribution.png)
+
+---
+
+Pie Chart of Genre Pops average word class distribution:
+
+![10](/readme_images/graphs/circle_diagram_pop_wordclass_distribution.png)
+
 
 ### Literature, Sources
  - "Data Science from Scratch: First Principles with Python", Chapter 18: Neural Networks, by. Joel Grus
