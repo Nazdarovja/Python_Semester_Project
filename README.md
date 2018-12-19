@@ -16,13 +16,12 @@ From your terminal of choice:
 python main.py
 - follow the menu instructions
 ````
-
 ## About this project - "Handmade" Neural Network
  
 ### Project Idea
 Our initial idea was to investigate, if we could build a Neural Network / Machine Learning Tool, to classify song lyrics by genre, by identifying certain characteristics about the song lyrics (features), and use these features to train our network. 
 
-### Testing the Handmade Neural Network findings - 1
+### Comparing our "Handmade" Neural Network to a "Proof of Concept" with Tensorflow
 In an attempt to verify and compare our networks findings, and to gain some experience with more established Machine Learning Tools, we have implemented an existing Machine Learning Framework, Tensorflow. It is located in a Jupyter Notebook, in the "tensorflow" subfolder.
 
 To run this notebook, navigate to the subfolder, and from your terminal of choice:
